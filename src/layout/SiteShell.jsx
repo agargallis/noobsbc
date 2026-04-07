@@ -1,8 +1,40 @@
-import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
+﻿import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import CookieBanner from '../components/ui/CookieBanner';
 import ScrollToTopButton from '../components/ui/ScrollToTopButton';
 import { useSiteData } from '../context/SiteDataContext';
+
+function PrivacyIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 3 5 6v5c0 5 3.4 8.5 7 10 3.6-1.5 7-5 7-10V6l-7-3Z" />
+      <path d="M9.5 12.5 11 14l3.5-4" />
+    </svg>
+  );
+}
+
+function CookiesIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M14.5 4.5a3 3 0 0 0 4 4 7.5 7.5 0 1 1-8-3.5 3 3 0 0 0 4-0.5Z" />
+      <circle cx="9" cy="13" r="1" fill="currentColor" stroke="none" />
+      <circle cx="14.5" cy="14.5" r="1" fill="currentColor" stroke="none" />
+      <circle cx="11.5" cy="9.5" r="1" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
+function TermsIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M8 3h7l4 4v14H8z" />
+      <path d="M15 3v4h4" />
+      <path d="M11 12h5" />
+      <path d="M11 16h5" />
+      <path d="M11 8h1" />
+    </svg>
+  );
+}
 
 function RouteScrollRestoration() {
   const location = useLocation();
@@ -15,7 +47,7 @@ function RouteScrollRestoration() {
 }
 
 export default function SiteShell() {
-  const { siteData } = useSiteData();
+  const { siteData, siteDataLoading } = useSiteData();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
@@ -32,6 +64,15 @@ export default function SiteShell() {
   useEffect(() => {
     setMenuOpen(false);
   }, [location.pathname]);
+
+  if (siteDataLoading || !siteData) {
+    return (
+      <div className="app-shell app-shell-loading" aria-busy="true">
+        <RouteScrollRestoration />
+        <main className="app-loading-main" />
+      </div>
+    );
+  }
 
   return (
     <div className="app-shell">
@@ -74,9 +115,6 @@ export default function SiteShell() {
           <a href="/#news" onClick={() => setMenuOpen(false)}>
             Νέα
           </a>
-          <NavLink to="/admin" onClick={() => setMenuOpen(false)}>
-            Διαχείριση
-          </NavLink>
         </nav>
       </header>
 
@@ -89,13 +127,19 @@ export default function SiteShell() {
           <div className="footer-copy">© 2026 Noobs. Όλα τα δικαιώματα διατηρούνται.</div>
 
           <div className="footer-legal">
-            <NavLink to="/privacy">Απόρρητο</NavLink>
-            <NavLink to="/cookies">Cookies</NavLink>
-            <NavLink to="/terms">Όροι</NavLink>
+            <NavLink to="/privacy" aria-label="Απόρρητο" title="Απόρρητο" className="footer-legal-icon">
+              <PrivacyIcon />
+            </NavLink>
+            <NavLink to="/cookies" aria-label="Cookies" title="Cookies" className="footer-legal-icon">
+              <CookiesIcon />
+            </NavLink>
+            <NavLink to="/terms" aria-label="Όροι" title="Όροι" className="footer-legal-icon">
+              <TermsIcon />
+            </NavLink>
           </div>
 
           <div className="footer-credit">
-            Δημιουργήθηκε από την{' '}
+            Υλοποιήθηκε από την{' '}
             <a href="https://ubd.gr" target="_blank" rel="noreferrer" className="footer-ubd">
               UBD
             </a>

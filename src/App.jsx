@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes } from 'react-router-dom';
+﻿import { Navigate, Route, Routes } from 'react-router-dom';
 import SiteShell from './layout/SiteShell';
 import AdminPage from './pages/AdminPage';
 import HomePage from './pages/HomePage';
@@ -83,9 +83,9 @@ export default function App() {
         <Route path="cookies" element={<LegalPage {...legalContent.cookies} />} />
         <Route path="terms" element={<LegalPage {...legalContent.terms} />} />
         <Route path="home" element={<Navigate to="/" replace />} />
-        <Route path="*" element={<NotFoundPage />} />
       </Route>
-      <Route path="/admin" element={<AdminPage />} />
+      <Route path="/gargalloadminonoobsikobc" element={<AdminPage />} />
+      <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
 }

@@ -37,21 +37,21 @@ const sponsorLinks = [
   {
     id: 'logitel',
     name: 'Logitel',
-    label: 'Μεγάλος χορηγός',
+    label: 'Επίσημος χορηγός',
     image: '/images/sponsor1.png',
     url: 'https://logitel.gr'
   },
   {
     id: 'aspro-provato',
-    name: 'Άσπρο Πρόβατο Κρεατοφαγείον',
-    label: 'Χορηγός φιλοξενίας',
+    name: 'Άσπρο Πρόβατο',
+    label: 'Χορηγός εξοπλισμού',
     image: '/images/sponsor2.png',
     url: 'https://aspro-provato.gr'
   },
   {
     id: 'ubd',
     name: 'UBD',
-    label: 'Χορηγός επίσημου site',
+    label: 'Κατασκευή του site',
     image: '/images/sponsor3.png',
     url: 'https://ubd.gr'
   }
@@ -63,17 +63,18 @@ export const defaultSiteData = {
     shortName: 'Noobs',
     city: 'Αθήνα',
     season: 'Σεζόν 2026',
-    tagline: 'Νέα ομάδα, καθαρό μυαλό, καθόλου φόβος.',
+    tagline: 'Παίζουμε σκληρά, χάνουμε σπάνια, κερδίζουμε μαζί.',
     description:
-      'Η επίσημη ψηφιακή έδρα των Noobs για τη συμμετοχή στο Basketaki The League, με πρόγραμμα, βαθμολογία, νέα και όλο τον αγωνιστικό παλμό της ομάδας.',
-    instagramHandle: '@noobsbasketball',
-    instagramUrl: 'https://instagram.com/noobsbasketball'
+      'Η επίσημη ιστοσελίδα της ομάδας Noobs στη Basketaki The League. Βαθμολογία, αποτελέσματα, ρόστερ και νέα απευθείας από το γήπεδο.',
+    instagramHandle: '@noobsbc',
+    instagramUrl: 'https://instagram.com/noobsbc'
   },
   hero: {
     eyebrow: 'Basketaki The League',
-    headline: 'Οι Noobs μπαίνουν στο Basketaki με ενέργεια, ένταση και βλέμμα μόνο μπροστά.',
+    headline: 'Οι Noobs παίζουν σκληρά στο Basketaki με πάθος, τεχνική και ομαδικό πνεύμα.',
     summary:
-      'Εδώ συγκεντρώνεται όλη η σεζόν: οι χορηγοί, τα τελευταία αποτελέσματα, η επόμενη αναμέτρηση, το ρόστερ και τα νέα της ομάδας.',
+      'Ακολούθα όλα όσα γίνονται στο γήπεδο: live αποτελέσματα, η τελευταία βαθμολογία, το πρόγραμμα αγώνων και το ρόστερ της ομάδας.',
+    featuredMatchId: 1,
     primaryCta: {
       label: 'Δες το ρόστερ',
       href: '#roster'
@@ -86,44 +87,129 @@ export const defaultSiteData = {
   nextMatch: {
     opponent: 'Rim Runners',
     competition: 'Basketaki The League',
-    venue: 'Κλειστό Άνω Λιοσίων',
+    venue: 'Άνω Λιόσια Arena',
     date: '2026-04-18T19:30:00+03:00',
-    note: 'Η είσοδος ανοίγει 45 λεπτά πριν το τζάμπολ.'
+    note: 'Οι πόρτες ανοίγουν 45 λεπτά πριν από το τζάμπολ.'
   },
   upcomingMatches: [
     {
       id: 1,
       date: '2026-04-18T19:30:00+03:00',
       opponent: 'Rim Runners',
-      venue: 'Κλειστό Άνω Λιοσίων',
+      opponentLogo: '/images/basketaki.png',
+      venue: 'Άνω Λιόσια Arena',
       competition: 'Basketaki The League',
-      home: true
+      home: true,
+      note: 'Οι πόρτες ανοίγουν 45 λεπτά πριν από το τζάμπολ.'
     },
     {
       id: 2,
       date: '2026-04-25T20:15:00+03:00',
       opponent: 'Fast Breakers',
+      opponentLogo: '/images/basketaki.png',
       venue: 'Galatsi Dome',
       competition: 'Basketaki The League',
-      home: false
+      home: false,
+      note: 'Σημείο συνάντησης ομάδας 60 λεπτά πριν από το παιχνίδι.'
     },
     {
       id: 3,
       date: '2026-05-03T18:00:00+03:00',
       opponent: 'Paint Protectors',
+      opponentLogo: '/images/basketaki.png',
       venue: 'Κλειστό Περιστερίου',
       competition: 'Basketaki The League',
-      home: true
+      home: true,
+      note: 'Πριν το ματς θα γίνει σύντομη παρουσίαση των χορηγών.'
     }
   ],
   sponsors: sponsorLinks,
+  standingsGroupTitle: '1ος Όμιλος',
   standings: [
-    { id: 1, team: 'Fast Breakers', played: 8, won: 7, lost: 1, points: 15, streak: 'Ν4' },
-    { id: 2, team: 'Noobs', played: 8, won: 6, lost: 2, points: 14, streak: 'Ν2' },
-    { id: 3, team: 'Rim Runners', played: 8, won: 5, lost: 3, points: 13, streak: 'Η1' },
-    { id: 4, team: 'Paint Protectors', played: 8, won: 4, lost: 4, points: 12, streak: 'Ν1' },
-    { id: 5, team: 'Clutch Factory', played: 8, won: 3, lost: 5, points: 11, streak: 'Η2' },
-    { id: 6, team: 'Triple Trouble', played: 8, won: 2, lost: 6, points: 10, streak: 'Η3' }
+    {
+      id: 1,
+      team: 'Fast Breakers',
+      logo: '/images/basketaki.png',
+      points: 16,
+      played: 8,
+      won: 8,
+      lost: 0,
+      streak: '8W',
+      scored: 642,
+      conceded: 511,
+      diff: 131,
+      ab: 0
+    },
+    {
+      id: 2,
+      team: 'Noobs',
+      logo: '/images/logo.png',
+      points: 15,
+      played: 8,
+      won: 7,
+      lost: 1,
+      streak: '3W',
+      scored: 618,
+      conceded: 552,
+      diff: 66,
+      ab: 0
+    },
+    {
+      id: 3,
+      team: 'Rim Runners',
+      logo: '/images/basketaki.png',
+      points: 13,
+      played: 8,
+      won: 5,
+      lost: 3,
+      streak: '1L',
+      scored: 587,
+      conceded: 566,
+      diff: 21,
+      ab: 0
+    },
+    {
+      id: 4,
+      team: 'Paint Protectors',
+      logo: '/images/basketaki.png',
+      points: 12,
+      played: 8,
+      won: 4,
+      lost: 4,
+      streak: '1W',
+      scored: 571,
+      conceded: 574,
+      diff: -3,
+      ab: 0
+    },
+    {
+      id: 5,
+      team: 'Clutch Factory',
+      logo: '/images/basketaki.png',
+      points: 11,
+      played: 8,
+      won: 3,
+      lost: 5,
+      streak: '2L',
+      scored: 544,
+      conceded: 589,
+      diff: -45,
+      ab: 0
+    },
+    {
+      id: 6,
+      team: 'Triple Trouble',
+      logo: '/images/basketaki.png',
+      points: 9,
+      played: 8,
+      won: 1,
+      lost: 7,
+      streak: '4L',
+      scored: 503,
+      conceded: 612,
+      diff: -109,
+      ab: 0
+    }
   ],
   latestMatches: [
     {
@@ -131,6 +217,8 @@ export const defaultSiteData = {
       date: '2026-04-03T21:00:00+03:00',
       home: 'Noobs',
       away: 'Clutch Factory',
+      homeLogo: '/images/logo.png',
+      awayLogo: '/images/basketaki.png',
       homeScore: 78,
       awayScore: 70,
       venue: 'Galatsi Dome'
@@ -140,6 +228,8 @@ export const defaultSiteData = {
       date: '2026-03-29T18:30:00+03:00',
       home: 'Paint Protectors',
       away: 'Noobs',
+      homeLogo: '/images/basketaki.png',
+      awayLogo: '/images/logo.png',
       homeScore: 65,
       awayScore: 72,
       venue: 'Κλειστό Χολαργού'
@@ -149,6 +239,8 @@ export const defaultSiteData = {
       date: '2026-03-21T20:00:00+03:00',
       home: 'Noobs',
       away: 'Triple Trouble',
+      homeLogo: '/images/logo.png',
+      awayLogo: '/images/basketaki.png',
       homeScore: 81,
       awayScore: 62,
       venue: 'Κλειστό Περιστερίου'
@@ -169,79 +261,79 @@ export const defaultSiteData = {
     },
     {
       id: 2,
-      name: 'Γιώργος Τζελέπης',
+      name: 'Θεόδωρος Παπαδόπουλος',
       number: 7,
       position: 'SG',
       age: 24,
       height: '1.88 μ.',
-      hometown: 'Πειραιάς',
+      hometown: 'Θεσσαλονίκη',
       shootingHand: 'Αριστερό',
-      bio: 'Εκρηκτικό scoring wing που απειλεί στο transition και εκτελεί σε δύσκολες κατοχές.',
-      photo: buildPlayerPortrait({ name: 'Γιώργος Τζελέπης', number: 7, accent: '#ff8a2a', background: '#4e1f6d' })
+      bio: 'Επιθετικό scoring wing με εκρηκτικό transition και ικανότητα να δημιουργεί ευκαιρίες.',
+      photo: buildPlayerPortrait({ name: 'Θεόδωρος Παπαδόπουλος', number: 7, accent: '#ff8a2a', background: '#4e1f6d' })
     },
     {
       id: 3,
-      name: 'Μάριος Καλογέρης',
+      name: 'Κωνσταντίνος Αλεξίου',
       number: 11,
       position: 'SF',
       age: 28,
       height: '1.93 μ.',
       hometown: 'Νέα Σμύρνη',
       shootingHand: 'Δεξί',
-      bio: 'Πολύπλευρος φόργουορντ με γερά ριμπάουντ και σταθερό σουτ από τις γωνίες.',
-      photo: buildPlayerPortrait({ name: 'Μάριος Καλογέρης', number: 11, accent: '#78e3c9', background: '#173f35' })
+      bio: 'Αμυντικός ειδικός με εκρηκτικό πρώτο βήμα και ικανότητα να κλέβει την μπάλα.',
+      photo: buildPlayerPortrait({ name: 'Κωνσταντίνος Αλεξίου', number: 11, accent: '#78e3c9', background: '#173f35' })
     },
     {
       id: 4,
-      name: 'Πέτρος Λιάπης',
+      name: 'Γιώργος Σιδέρης',
       number: 21,
       position: 'PF',
       age: 30,
       height: '1.98 μ.',
-      hometown: 'Μαρούσι',
+      hometown: 'Πειραιάς',
       shootingHand: 'Δεξί',
-      bio: 'Σκληρός στο σκριν, τελειώνει φάσεις στη ρακέτα και δίνει πολλές δεύτερες κατοχές.',
-      photo: buildPlayerPortrait({ name: 'Πέτρος Λιάπης', number: 21, accent: '#f36f82', background: '#5b1624' })
+      bio: 'Δυνατός στο ριμπάουντ, αξιόπιστος επιλογή για pick and roll και εξαιρετικός αμυντικός παίκτης.',
+      photo: buildPlayerPortrait({ name: 'Γιώργος Σιδέρης', number: 21, accent: '#f36f82', background: '#5b1624' })
     },
     {
       id: 5,
-      name: 'Δημήτρης Κανέλος',
+      name: 'Δημήτρης Λεωνίδας',
       number: 34,
       position: 'C',
       age: 27,
       height: '2.02 μ.',
-      hometown: 'Αιγάλεω',
+      hometown: 'Ηράκλειο',
       shootingHand: 'Δεξί',
-      bio: 'Προστατεύει το καλάθι, τελειώνει δυνατά στο roll και κρατά την άμυνα σε εγρήγορση.',
-      photo: buildPlayerPortrait({ name: 'Δημήτρης Κανέλος', number: 34, accent: '#7cc5ff', background: '#112a54' })
+      bio: 'Κυριαρχεί στη ρακέτα, αξιόπιστος επιλογή για pick and roll και ισχυρός στο block.',
+      photo: buildPlayerPortrait({ name: 'Δημήτρης Λεωνίδας', number: 34, accent: '#7cc5ff', background: '#112a54' })
     }
   ],
   news: [
     {
       id: 1,
-      title: 'Σημαντική νίκη των Noobs στην τελευταία αγωνιστική',
+      title: 'Νίκη των Noobs κόντρα στην Clutch Factory με διαφορά οκτώ πόντων',
       date: '2026-04-04',
       category: 'Αγώνας',
       excerpt:
-        'Οι Noobs έκλεισαν δυνατά το παιχνίδι απέναντι στην Clutch Factory και κράτησαν το προβάδισμα στα τελευταία λεπτά με σωστές επιλογές σε άμυνα και επίθεση.',
+        'Οι Noobs επικράτησαν με σκορ 78-70 επί της Clutch Factory σε ένα αγωνιστικό ματς με εναλλαγές στην ηγεσία.',
       image: '/images/basketaki.png'
     },
     {
       id: 2,
-      title: 'Έμφαση στην πίεση και στο transition στην προπόνηση της εβδομάδας',
+      title: 'Εβδομάδα προπόνησης με έμφαση στο transition και στην αμυντική οργάνωση',
       date: '2026-04-01',
       category: 'Προπόνηση',
       excerpt:
-        'Το τεχνικό τιμ δούλεψε ένταση πάνω στην μπάλα, γρήγορη πρώτη πάσα και τελειώματα στο ανοιχτό γήπεδο ενόψει του επόμενου αγώνα.',
+        'Η ομάδα επικεντρώθηκε στο γρήγορο transition και στη βελτίωση της αμυντικής στάσης ενόψει των επόμενων αγώνων.',
       image: '/images/logo.png'
     },
     {
       id: 3,
-      title: 'Η UBD στηρίζει την ψηφιακή παρουσία της ομάδας για τη σεζόν 2026',
+      title: 'Η UBD κατασκεύασε την επίσημη ιστοσελίδα της ομάδας για τη σεζόν 2026',
       date: '2026-03-27',
-      category: 'Ομάδα',
+      category: 'Χορηγία',
       excerpt:
-        'Η UBD βρίσκεται δίπλα στους Noobs ως χορηγός του επίσημου website, ενισχύοντας την online εικόνα της ομάδας σε όλη τη φετινή πορεία στο Basketaki.',
+        'Η UBD ανέπτυξε το νέο website των Noobs με live αποτελέσματα, βαθμολογία και ρόστερ για τη σεζόν Basketaki.',
       image: '/images/sponsor3.png'
     }
   ],

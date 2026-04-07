@@ -1,4 +1,4 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 import ContactForm from '../components/ui/ContactForm';
 import CountdownPanel from '../components/ui/CountdownPanel';
 import InstaCarousel from '../components/ui/InstaCarousel';
@@ -14,6 +14,9 @@ export default function HomePage() {
   const { siteData } = useSiteData();
   const [selectedPlayer, setSelectedPlayer] = useState(null);
   const heroSponsors = [...siteData.sponsors, ...siteData.sponsors];
+  const featuredHeroMatch =
+    siteData.upcomingMatches.find((match) => String(match.id) === String(siteData.hero.featuredMatchId)) ?? siteData.nextMatch;
+
   useScrollAnimation();
 
   return (
@@ -23,7 +26,7 @@ export default function HomePage() {
           <div className="hero-focused">
             <div className="hero-main-grid">
               <div className="hero-aside">
-                <CountdownPanel nextMatch={siteData.nextMatch} />
+                <CountdownPanel nextMatch={featuredHeroMatch} />
               </div>
 
               <aside className="hero-showcase" aria-label="Noobs και χορηγοί">
@@ -60,11 +63,11 @@ export default function HomePage() {
             </div>
 
             <div className="button-row hero-buttons">
-              <a className="button" href="/#roster">
-                Δες το ρόστερ
+              <a className="button" href={siteData.hero.primaryCta.href}>
+                {siteData.hero.primaryCta.label}
               </a>
-              <a className="button ghost" href="/#standings">
-                Δες τη βαθμολογία
+              <a className="button ghost" href={siteData.hero.secondaryCta.href}>
+                {siteData.hero.secondaryCta.label}
               </a>
             </div>
           </div>
@@ -73,26 +76,26 @@ export default function HomePage() {
 
       <section className="section-block" id="standings">
         <div className="split-heading" data-animate>
-          <SectionHeading eyebrow="Βαθμολογια" title="Η βαθμολογική μας κατάταξη." />
+          <SectionHeading eyebrow="Βαθμολογία" title="Η βαθμολογική μας κατάταξη." />
           <a className="league-mark" href="https://www.basketaki.com" target="_blank" rel="noreferrer">
             <img src="/images/basketaki.png" alt="Basketaki The League" />
           </a>
         </div>
         <div data-animate style={{ '--anim-delay': '0.1s' }}>
-          <StandingsTable standings={siteData.standings} />
+          <StandingsTable standings={siteData.standings} groupTitle={siteData.standingsGroupTitle} />
         </div>
       </section>
 
       <section className="section-block" id="scores">
         <div data-animate>
-          <SectionHeading eyebrow="Τελευταια Αποτελεσματα" title="Τα πιο πρόσφατα τελικά μας σκορ." />
+          <SectionHeading eyebrow="Τελευταία αποτελέσματα" title="Τα πιο πρόσφατα τελικά μας σκορ." />
         </div>
         <LatestScoresStrip matches={siteData.latestMatches} />
       </section>
 
       <section className="section-block" id="schedule">
         <div data-animate>
-          <SectionHeading eyebrow="Προγραμμα Αγωνων" title="Οι επόμενες αναμετρήσεις μας." />
+          <SectionHeading eyebrow="Πρόγραμμα αγώνων" title="Οι επόμενες αναμετρήσεις μας." />
         </div>
         <div data-animate style={{ '--anim-delay': '0.1s' }}>
           <UpcomingMatchesList matches={siteData.upcomingMatches} />
@@ -101,7 +104,7 @@ export default function HomePage() {
 
       <section className="section-block" id="roster">
         <div data-animate>
-          <SectionHeading eyebrow="Ροστερ" title="Οι παίχτες μας." />
+          <SectionHeading eyebrow="Ρόστερ" title="Οι παίκτες μας." />
         </div>
 
         <div className="roster-grid">
@@ -129,22 +132,20 @@ export default function HomePage() {
 
       <section className="section-block" id="news">
         <div data-animate>
-          <SectionHeading eyebrow="Νεα Ομαδας" title="Τα τελευταία νέα μας." align="center" />
+          <SectionHeading eyebrow="Νέα ομάδας" title="Τα τελευταία νέα μας." align="center" />
         </div>
         <div data-animate style={{ '--anim-delay': '0.08s' }}>
-          <InstaCarousel
-            posts={siteData.instagramPosts}
-            instagramUrl={siteData.meta.instagramUrl}
-          />
+          <InstaCarousel posts={siteData.instagramPosts} instagramUrl={siteData.meta.instagramUrl} />
         </div>
       </section>
 
       <section className="section-block" id="contact">
         <div className="contact-layout" data-animate>
           <div>
-            <SectionHeading eyebrow="Επικοινωνια" title="Θέλεις να γίνεις μέρος της ομάδας;" align="center" />
+            <SectionHeading eyebrow="Επικοινωνία" title="Θέλεις να γίνεις μέρος της ομάδας;" align="center" />
             <p className="contact-intro">
-              Ψάχνουμε παίκτες, προπονητές και χορηγούς. Αν έχεις κάτι να προτείνεις ή θέλεις να συνεργαστείς μαζί μας, στείλε μας μήνυμα.
+              Ψάχνουμε παίκτες, προπονητές και χορηγούς. Αν έχεις κάτι να προτείνεις ή θέλεις να συνεργαστείς μαζί μας,
+              στείλε μας μήνυμα.
             </p>
           </div>
           <ContactForm />
@@ -153,7 +154,7 @@ export default function HomePage() {
 
       <section className="section-block sponsor-highlight">
         <div data-animate>
-          <SectionHeading eyebrow="Χορηγοι" title="Οι επίσημοι χορηγοί μας." />
+          <SectionHeading eyebrow="Χορηγοί" title="Οι επίσημοι χορηγοί μας." />
         </div>
 
         <div className="sponsor-grid">

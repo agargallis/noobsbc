@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+﻿import { useRef, useState } from 'react';
 
 export default function InstaCarousel({ posts, instagramUrl }) {
   const trackRef = useRef(null);
@@ -7,7 +7,7 @@ export default function InstaCarousel({ posts, instagramUrl }) {
 
   const getStep = () => {
     const card = trackRef.current?.children[0];
-    return card ? card.offsetWidth + 20 : 0; // 20 = gap
+    return card ? card.offsetWidth + 20 : 0;
   };
 
   const goTo = (i) => {
@@ -36,8 +36,8 @@ export default function InstaCarousel({ posts, instagramUrl }) {
               <div className="insta-card-body">
                 <p>{post.caption}</p>
                 <div className="insta-card-meta">
-                  <span>♥ {post.likes}</span>
-                  <span>💬 {post.comments}</span>
+                  <span>Likes {post.likes}</span>
+                  <span>Σχόλια {post.comments}</span>
                 </div>
               </div>
             </a>

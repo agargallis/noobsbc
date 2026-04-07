@@ -1,4 +1,4 @@
-export default function LegalPage({ title, lead, sections }) {
+﻿export default function LegalPage({ title, lead, sections }) {
   return (
     <section className="legal-page">
       <div className="legal-page-inner">

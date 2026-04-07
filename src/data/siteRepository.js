@@ -1,48 +1,142 @@
 import { defaultSiteData } from './defaultSiteData';
+import { isSupabaseConfigured, SITE_CONTENT_SLUG, SITE_CONTENT_TABLE, supabase } from '../lib/supabaseClient';
 
-const STORAGE_KEY = 'noobs-site-data-v1';
+const STORAGE_KEY = 'noobs-site-data-v3';
 
-const mergeTopLevel = (savedData) => ({
-  ...defaultSiteData,
+const clone = (value) => JSON.parse(JSON.stringify(value));
+
+export const mergeSiteData = (savedData = {}) => ({
+  ...clone(defaultSiteData),
   ...savedData,
-  meta: { ...defaultSiteData.meta, ...savedData?.meta },
-  hero: { ...defaultSiteData.hero, ...savedData?.hero },
-  nextMatch: { ...defaultSiteData.nextMatch, ...savedData?.nextMatch }
+  meta: {
+    ...defaultSiteData.meta,
+    ...savedData?.meta
+  },
+  hero: {
+    ...defaultSiteData.hero,
+    ...savedData?.hero,
+    primaryCta: {
+      ...defaultSiteData.hero.primaryCta,
+      ...savedData?.hero?.primaryCta
+    },
+    secondaryCta: {
+      ...defaultSiteData.hero.secondaryCta,
+      ...savedData?.hero?.secondaryCta
+    }
+  },
+  nextMatch: {
+    ...defaultSiteData.nextMatch,
+    ...savedData?.nextMatch
+  },
+  standings: Array.isArray(savedData?.standings) ? savedData.standings : clone(defaultSiteData.standings),
+  latestMatches: Array.isArray(savedData?.latestMatches) ? savedData.latestMatches : clone(defaultSiteData.latestMatches),
+  upcomingMatches: Array.isArray(savedData?.upcomingMatches) ? savedData.upcomingMatches : clone(defaultSiteData.upcomingMatches),
+  players: Array.isArray(savedData?.players) ? savedData.players : clone(defaultSiteData.players),
+  news: Array.isArray(savedData?.news) ? savedData.news : clone(defaultSiteData.news),
+  instagramPosts: Array.isArray(savedData?.instagramPosts) ? savedData.instagramPosts : clone(defaultSiteData.instagramPosts),
+  sponsors: Array.isArray(savedData?.sponsors) ? savedData.sponsors : clone(defaultSiteData.sponsors)
 });
 
+const loadLocal = () => {
+  if (typeof window === 'undefined') {
+    return clone(defaultSiteData);
+  }
+
+  try {
+    const raw = window.localStorage.getItem(STORAGE_KEY);
+    if (!raw) {
+      return clone(defaultSiteData);
+    }
+
+    return mergeSiteData(JSON.parse(raw));
+  } catch (error) {
+    console.error('Failed to load local site data:', error);
+    return clone(defaultSiteData);
+  }
+};
+
+const saveLocal = (nextValue) => {
+  if (typeof window === 'undefined') {
+    return;
+  }
+
+  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(nextValue));
+};
+
 export const siteRepository = {
-  load() {
+  normalize(value) {
+    return mergeSiteData(value);
+  },
+
+  async load() {
     if (typeof window === 'undefined') {
-      return defaultSiteData;
+      return clone(defaultSiteData);
+    }
+
+    if (!isSupabaseConfigured || !supabase) {
+      return loadLocal();
     }
 
     try {
-      const raw = window.localStorage.getItem(STORAGE_KEY);
-      if (!raw) {
-        return defaultSiteData;
+      const { data, error } = await supabase
+        .from(SITE_CONTENT_TABLE)
+        .select('payload')
+        .eq('slug', SITE_CONTENT_SLUG)
+        .maybeSingle();
+
+      if (error) {
+        throw error;
       }
 
-      return mergeTopLevel(JSON.parse(raw));
+      if (!data?.payload) {
+        return clone(defaultSiteData);
+      }
+
+      const merged = mergeSiteData(data.payload);
+      saveLocal(merged);
+      return merged;
     } catch (error) {
-      console.error('Failed to load site data:', error);
-      return defaultSiteData;
+      console.error('Failed to load site data from Supabase:', error);
+      return loadLocal();
     }
   },
 
-  save(nextValue) {
-    if (typeof window === 'undefined') {
-      return;
+  async save(nextValue) {
+    const cleanValue = mergeSiteData(clone(nextValue));
+
+    if (typeof window !== 'undefined') {
+      saveLocal(cleanValue);
     }
 
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(nextValue));
+    if (!isSupabaseConfigured || !supabase) {
+      return cleanValue;
+    }
+
+    const { error } = await supabase
+      .from(SITE_CONTENT_TABLE)
+      .upsert(
+        {
+          slug: SITE_CONTENT_SLUG,
+          payload: cleanValue,
+          updated_at: new Date().toISOString()
+        },
+        { onConflict: 'slug' }
+      );
+
+    if (error) {
+      throw error;
+    }
+
+    return cleanValue;
   },
 
-  reset() {
-    if (typeof window === 'undefined') {
-      return defaultSiteData;
+  async reset() {
+    const resetValue = clone(defaultSiteData);
+
+    if (typeof window !== 'undefined') {
+      window.localStorage.removeItem(STORAGE_KEY);
     }
 
-    window.localStorage.removeItem(STORAGE_KEY);
-    return defaultSiteData;
+    return this.save(resetValue);
   }
 };

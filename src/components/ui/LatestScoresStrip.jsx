@@ -16,9 +16,21 @@ export default function LatestScoresStrip({ matches }) {
               <strong className={isWin ? 'win' : 'loss'}>{isWin ? 'Ν' : 'Η'}</strong>
             </div>
             <h3>
+              <img
+                src={match.homeLogo || '/images/basketaki.png'}
+                alt=""
+                className="match-team-logo"
+                aria-hidden="true"
+              />
               {match.home} <span>{match.homeScore}</span>
             </h3>
             <h3>
+              <img
+                src={match.awayLogo || '/images/basketaki.png'}
+                alt=""
+                className="match-team-logo"
+                aria-hidden="true"
+              />
               {match.away} <span>{match.awayScore}</span>
             </h3>
             <p>{match.venue}</p>
