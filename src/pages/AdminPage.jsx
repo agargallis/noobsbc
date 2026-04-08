@@ -58,8 +58,6 @@ const emptyPlayer = () => ({
   position: '',
   age: 0,
   height: '',
-  hometown: '',
-  shootingHand: '',
   bio: '',
   photo: '/images/logo.png'
 });
@@ -904,14 +902,6 @@ export default function AdminPage() {
                   <label>
                     Ύψος
                     <input value={player.height} onChange={(event) => updateArrayItem('players', index, 'height', event.target.value)} />
-                  </label>
-                  <label>
-                    Πόλη
-                    <input value={player.hometown} onChange={(event) => updateArrayItem('players', index, 'hometown', event.target.value)} />
-                  </label>
-                  <label>
-                    Χέρι εκτέλεσης
-                    <input value={player.shootingHand} onChange={(event) => updateArrayItem('players', index, 'shootingHand', event.target.value)} />
                   </label>
                   <label>
                     URL φωτογραφίας

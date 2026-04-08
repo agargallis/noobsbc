@@ -1835,6 +1835,7 @@ tr.is-highlighted:hover {
   background: var(--panel-strong);
   box-shadow: 0 40px 100px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.07) inset;
   animation: modal-scale-in 0.4s var(--ease-out) both;
+  isolation: isolate;
 }
 
 .player-modal-photo {
@@ -1843,9 +1844,13 @@ tr.is-highlighted:hover {
   min-height: 500px;
   object-fit: cover;
   filter: brightness(0.95) saturate(1.05);
+  pointer-events: none;
+  user-select: none;
 }
 
 .player-modal-content {
+  position: relative;
+  z-index: 1;
   padding: 32px 30px;
   background: linear-gradient(145deg, rgba(255, 255, 255, 0.04) 0%, transparent 50%);
   text-align: center;
@@ -1871,6 +1876,7 @@ tr.is-highlighted:hover {
   position: absolute;
   top: 18px;
   right: 18px;
+  z-index: 3;
   padding: 9px 16px;
   border: 1px solid var(--stroke);
   border-radius: 999px;
@@ -1881,6 +1887,9 @@ tr.is-highlighted:hover {
   font-weight: 600;
   transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s var(--spring);
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  pointer-events: auto;
+  touch-action: manipulation;
 }
 
 .player-modal-close:hover {
@@ -3338,6 +3347,7 @@ tr.is-highlighted:hover {
   -webkit-overflow-scrolling: touch;
   justify-content: center;
   align-items: flex-start;
+  scroll-padding-inline: 0;
 }
 
 .insta-track::-webkit-scrollbar {
@@ -3483,14 +3493,23 @@ tr.is-highlighted:hover {
 }
 
 @media (max-width: 700px) {
+  .insta-track {
+    justify-content: flex-start;
+  }
+
   .insta-card {
     flex: 0 0 calc(50% - 10px);
   }
 }
 
 @media (max-width: 480px) {
+  .insta-track {
+    gap: 14px;
+    justify-content: flex-start;
+  }
+
   .insta-card {
-    flex: 0 0 82%;
+    flex: 0 0 min(84vw, 320px);
   }
 }
 
@@ -4465,6 +4484,7 @@ body.modal-open {
     max-height: min(82dvh, 720px);
     border-radius: 22px;
     overflow: hidden;
+    overscroll-behavior: contain;
   }
 
   .player-modal-photo {
@@ -4508,6 +4528,9 @@ body.modal-open {
   .player-modal-close {
     top: 10px;
     right: 10px;
+    z-index: 4;
+    min-width: 92px;
+    min-height: 38px;
     padding: 7px 11px;
     font-size: 0.76rem;
     background: rgba(4, 10, 20, 0.82);

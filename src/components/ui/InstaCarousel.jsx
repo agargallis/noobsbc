@@ -1,27 +1,57 @@
-﻿import { useRef, useState } from 'react';
+﻿import { useEffect, useRef, useState } from 'react';
 
 export default function InstaCarousel({ posts, instagramUrl }) {
   const trackRef = useRef(null);
   const [index, setIndex] = useState(0);
   const total = posts.length;
 
-  const getStep = () => {
-    const card = trackRef.current?.children[0];
-    return card ? card.offsetWidth + 20 : 0;
+  const getCards = () => Array.from(trackRef.current?.children ?? []);
+
+  const scrollToCard = (targetIndex, behavior = 'smooth') => {
+    const cards = getCards();
+    const targetCard = cards[targetIndex];
+    if (!trackRef.current || !targetCard) {
+      return;
+    }
+
+    trackRef.current.scrollTo({
+      left: targetCard.offsetLeft,
+      behavior,
+    });
   };
 
-  const goTo = (i) => {
-    const clamped = Math.max(0, Math.min(total - 1, i));
+  const goTo = (targetIndex) => {
+    const clamped = Math.max(0, Math.min(total - 1, targetIndex));
     setIndex(clamped);
-    trackRef.current?.scrollTo({ left: clamped * getStep(), behavior: 'smooth' });
+    scrollToCard(clamped);
   };
 
   const onScroll = () => {
-    const step = getStep();
-    if (step > 0) {
-      setIndex(Math.round((trackRef.current?.scrollLeft ?? 0) / step));
+    const track = trackRef.current;
+    const cards = getCards();
+    if (!track || !cards.length) {
+      return;
     }
+
+    const currentLeft = track.scrollLeft;
+    let nearestIndex = 0;
+    let nearestDistance = Number.POSITIVE_INFINITY;
+
+    cards.forEach((card, cardIndex) => {
+      const distance = Math.abs(card.offsetLeft - currentLeft);
+      if (distance < nearestDistance) {
+        nearestDistance = distance;
+        nearestIndex = cardIndex;
+      }
+    });
+
+    setIndex((currentIndex) => (currentIndex === nearestIndex ? currentIndex : nearestIndex));
   };
+
+  useEffect(() => {
+    setIndex(0);
+    requestAnimationFrame(() => scrollToCard(0, 'auto'));
+  }, [posts]);
 
   return (
     <div className="insta-carousel">
@@ -90,4 +120,3 @@ export default function InstaCarousel({ posts, instagramUrl }) {
     </div>
   );
 }
-

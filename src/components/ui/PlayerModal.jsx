@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+﻿import { useEffect } from 'react';
 
 export default function PlayerModal({ player, onClose }) {
   useEffect(() => {
@@ -55,14 +55,6 @@ export default function PlayerModal({ player, onClose }) {
             <div>
               <small>Ύψος</small>
               <strong>{player.height}</strong>
-            </div>
-            <div>
-              <small>Πόλη</small>
-              <strong>{player.hometown}</strong>
-            </div>
-            <div>
-              <small>Χέρι εκτέλεσης</small>
-              <strong>{player.shootingHand}</strong>
             </div>
           </div>
         </div>
