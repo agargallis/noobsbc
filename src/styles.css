@@ -2075,14 +2075,24 @@ tr.is-highlighted:hover {
 /* Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬ */
 .sponsor-highlight {
   padding-bottom: 96px;
+  text-align: center;
+}
+
+.sponsor-highlight .section-heading {
+  align-items: center;
+  justify-items: center;
+  text-align: center;
 }
 
 .sponsor-grid {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 340px));
+  justify-content: center;
+  justify-items: center;
   margin-top: 32px;
 }
 
 .sponsor-card {
+  width: min(100%, 340px);
   text-align: center;
   position: relative;
   overflow: hidden;
