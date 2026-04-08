@@ -58,7 +58,7 @@ export default function UpcomingMatchesList({ matches }) {
         return (
           <article key={match.id} className="upcoming-item">
             <div className="upcoming-item-date">
-              <span className="upcoming-item-competition">{match.competition}</span>
+              <a className="upcoming-item-competition competition-link" href="https://www.basketaki.com" target="_blank" rel="noreferrer">{match.competition}</a>
               <strong className="upcoming-date-line"><CalendarIcon />{formatFullMatchDate(match.date)}</strong>
             </div>
 
@@ -94,3 +94,4 @@ export default function UpcomingMatchesList({ matches }) {
     </div>
   );
 }
+
