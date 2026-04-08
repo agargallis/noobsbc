@@ -35,8 +35,8 @@ export default function UpcomingMatchesList({ matches }) {
         return (
           <article key={match.id} className="upcoming-item">
             <div className="upcoming-item-date">
+              <span className="upcoming-item-competition">{match.competition}</span>
               <strong>{formatFullMatchDate(match.date)}</strong>
-              <span>{match.competition}</span>
             </div>
 
             <div className="upcoming-item-main">
