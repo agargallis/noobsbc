@@ -80,7 +80,7 @@ export default function SiteShell() {
 
       <header className={`site-header${scrolled ? ' is-scrolled' : ''}`}>
         <Link className="brand" to="/">
-          <img src="/images/logo.png" alt="Λογότυπο Noobs" className="brand-logo" />
+          <img src="/images/logo1.png" alt="Λογότυπο Noobs" className="brand-logo" />
           <div className="brand-copy">
             <strong>{siteData.meta.shortName} BC</strong>
           </div>

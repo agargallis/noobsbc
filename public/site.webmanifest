@@ -1,0 +1,16 @@
+﻿{
+  "name": "Noobs BC",
+  "short_name": "Noobs BC",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0b1118",
+  "theme_color": "#0b1118",
+  "lang": "el",
+  "icons": [
+    {
+      "src": "/images/logo1.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

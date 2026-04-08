@@ -27,7 +27,7 @@
               </td>
               <td className="standings-team-cell">
                 <span className="standings-team-brand">
-                  <img src={team.logo || '/images/logo.png'} alt={team.team} className="standings-team-logo" />
+                  <img src={team.logo || '/images/logo1.png'} alt={team.team} className="standings-team-logo" />
                   <span className="standings-team-name">{team.team}</span>
                 </span>
               </td>

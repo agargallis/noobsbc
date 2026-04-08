@@ -32,7 +32,7 @@ const emptyLatestMatch = () => ({
   date: new Date().toISOString(),
   home: 'Noobs',
   away: '',
-  homeLogo: '/images/logo.png',
+  homeLogo: '/images/logo1.png',
   awayLogo: '/images/basketaki.png',
   homeScore: 0,
   awayScore: 0,
@@ -59,12 +59,12 @@ const emptyPlayer = () => ({
   age: 0,
   height: '',
   bio: '',
-  photo: '/images/logo.png'
+  photo: '/images/logo1.png'
 });
 
 const emptyInstagramPost = () => ({
   id: createId(),
-  image: '/images/logo.png',
+  image: '/images/logo1.png',
   caption: '',
   likes: 0,
   comments: 0,
@@ -75,7 +75,7 @@ const emptySponsor = () => ({
   id: `sponsor-${createId()}`,
   name: '',
   label: '',
-  image: '/images/logo.png',
+  image: '/images/logo1.png',
   url: ''
 });
 
@@ -347,7 +347,7 @@ export default function AdminPage() {
       <div className="admin-auth-shell">
         <div className="not-found-card admin-login-card">
           <Link className="brand admin-brand" to="/">
-            <img src="/images/logo.png" alt="Noobs logo" className="brand-logo" />
+            <img src="/images/logo1.png" alt="Noobs logo" className="brand-logo" />
             <div>
               <strong>Admin Noobs</strong>
               <span>Απαιτείται Supabase config</span>
@@ -382,7 +382,7 @@ export default function AdminPage() {
       <div className="admin-auth-shell">
         <div className="not-found-card admin-login-card">
           <Link className="brand admin-brand" to="/">
-            <img src="/images/logo.png" alt="Noobs logo" className="brand-logo" />
+            <img src="/images/logo1.png" alt="Noobs logo" className="brand-logo" />
             <div>
               <strong>Διαχείριση Noobs</strong>
               <span>Σύνδεση με Supabase Auth</span>
@@ -437,7 +437,7 @@ export default function AdminPage() {
     <div className="admin-shell">
       <aside className="admin-rail">
         <Link className="brand admin-brand" to="/">
-          <img src="/images/logo.png" alt="Noobs logo" className="brand-logo" />
+          <img src="/images/logo1.png" alt="Noobs logo" className="brand-logo" />
           <div>
             <strong>Διαχείριση Noobs</strong>
           </div>

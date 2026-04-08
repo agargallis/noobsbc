@@ -26,8 +26,8 @@ export default function UpcomingMatchesList({ matches }) {
   return (
     <div className="upcoming-list">
       {matches.map((match) => {
-        const homeLogo = match.home ? '/images/logo.png' : match.opponentLogo || '/images/basketaki.png';
-        const awayLogo = match.home ? match.opponentLogo || '/images/basketaki.png' : '/images/logo.png';
+        const homeLogo = match.home ? '/images/logo1.png' : match.opponentLogo || '/images/basketaki.png';
+        const awayLogo = match.home ? match.opponentLogo || '/images/basketaki.png' : '/images/logo1.png';
         const homeName = match.home ? 'Noobs' : match.opponent;
         const awayName = match.home ? match.opponent : 'Noobs';
         const locationUrl = resolveLocationUrl(match.mapUrl, match.venue);

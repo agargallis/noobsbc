@@ -40,7 +40,7 @@ export default function CountdownPanel({ nextMatch }) {
         <span className="pill">ΕΠΟΜΕΝΟΣ ΑΓΩΝΑΣ</span>
         <div className="countdown-matchup">
           <span className="countdown-team-card is-home">
-            <img src="/images/logo.png" alt="" className="countdown-team-logo" aria-hidden="true" />
+            <img src="/images/logo1.png" alt="" className="countdown-team-logo" aria-hidden="true" />
             <span className="countdown-team-name">Noobs</span>
           </span>
           <span className="countdown-vs">VS</span>

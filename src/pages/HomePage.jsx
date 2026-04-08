@@ -32,7 +32,7 @@ export default function HomePage() {
 
               <aside className="hero-showcase" aria-label="Noobs και χορηγοί">
                 <div className="hero-showcase-logo">
-                  <img src="/images/logo.png" alt={siteData.meta.shortName} className="hero-zoom-logo" />
+                  <img src="/images/logo1.png" alt={siteData.meta.shortName} className="hero-zoom-logo" />
                 </div>
 
                 <div className="hero-sponsors-loop">

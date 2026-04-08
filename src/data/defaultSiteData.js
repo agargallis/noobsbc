@@ -144,7 +144,7 @@ export const defaultSiteData = {
     {
       id: 2,
       team: 'Noobs',
-      logo: '/images/logo.png',
+      logo: '/images/logo1.png',
       points: 15,
       played: 8,
       won: 7,
@@ -218,7 +218,7 @@ export const defaultSiteData = {
       date: '2026-04-03T21:00:00+03:00',
       home: 'Noobs',
       away: 'Clutch Factory',
-      homeLogo: '/images/logo.png',
+      homeLogo: '/images/logo1.png',
       awayLogo: '/images/basketaki.png',
       homeScore: 78,
       awayScore: 70,
@@ -231,7 +231,7 @@ export const defaultSiteData = {
       home: 'Paint Protectors',
       away: 'Noobs',
       homeLogo: '/images/basketaki.png',
-      awayLogo: '/images/logo.png',
+      awayLogo: '/images/logo1.png',
       homeScore: 65,
       awayScore: 72,
       venue: 'Κλειστό Χολαργού'
@@ -241,7 +241,7 @@ export const defaultSiteData = {
       date: '2026-03-21T20:00:00+03:00',
       home: 'Noobs',
       away: 'Triple Trouble',
-      homeLogo: '/images/logo.png',
+      homeLogo: '/images/logo1.png',
       awayLogo: '/images/basketaki.png',
       homeScore: 81,
       awayScore: 62,
@@ -327,7 +327,7 @@ export const defaultSiteData = {
       category: 'Προπόνηση',
       excerpt:
         'Η ομάδα επικεντρώθηκε στο γρήγορο transition και στη βελτίωση της αμυντικής στάσης ενόψει των επόμενων αγώνων.',
-      image: '/images/logo.png'
+      image: '/images/logo1.png'
     },
     {
       id: 3,
@@ -342,7 +342,7 @@ export const defaultSiteData = {
   instagramPosts: [
     {
       id: 1,
-      image: '/images/logo.png',
+      image: '/images/logo1.png',
       caption: '',
       likes: 0,
       comments: 0,
@@ -350,7 +350,7 @@ export const defaultSiteData = {
     },
     {
       id: 2,
-      image: '/images/logo.png',
+      image: '/images/logo1.png',
       caption: '',
       likes: 0,
       comments: 0,
@@ -358,7 +358,7 @@ export const defaultSiteData = {
     },
     {
       id: 3,
-      image: '/images/logo.png',
+      image: '/images/logo1.png',
       caption: '',
       likes: 0,
       comments: 0,
