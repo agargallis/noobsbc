@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom';
 import CountdownPanel from '../components/ui/CountdownPanel';
 import InstaCarousel from '../components/ui/InstaCarousel';
 import LatestScoresStrip from '../components/ui/LatestScoresStrip';
+import PlayerModal from '../components/ui/PlayerModal';
+import RosterCarousel from '../components/ui/RosterCarousel';
+import SectionHeading from '../components/ui/SectionHeading';
 import StandingsTable from '../components/ui/StandingsTable';
 import UpcomingMatchesList from '../components/ui/UpcomingMatchesList';
 import { useAuth } from '../context/AuthContext';
@@ -108,19 +111,14 @@ function DragHandle() {
 
 function AdminSection({ id, title, description, preview, actions, children }) {
   return (
-    <section id={id} className="admin-builder-section">
-      <div className="admin-builder-head">
-        <div>
-          <h2>{title}</h2>
-          <p>{description}</p>
-        </div>
+    <section id={id} className="section-block admin-live-section admin-builder-section">
+      <div className="admin-live-section-head">
+        <SectionHeading eyebrow={title} title={title} body={description} />
         {actions ? <div className="admin-builder-actions">{actions}</div> : null}
       </div>
 
-      <div className="admin-builder-grid">
-        <div className="admin-preview-card">{preview}</div>
-        <div className="admin-editor-card">{children}</div>
-      </div>
+      <div className="admin-live-preview">{preview}</div>
+      <div className="admin-live-editor">{children}</div>
     </section>
   );
 }
@@ -131,6 +129,7 @@ export default function AdminPage() {
 
   const [draft, setDraft] = useState(() => clone(siteData));
   const [activeSection, setActiveSection] = useState('admin-next-match');
+  const [previewPlayer, setPreviewPlayer] = useState(null);
   const [status, setStatus] = useState('Το panel είναι έτοιμο για live αλλαγές.');
   const [statusType, setStatusType] = useState('ok');
   const [isSaving, setIsSaving] = useState(false);
@@ -284,7 +283,23 @@ export default function AdminPage() {
   const resolveHeroMatch = (currentDraft) =>
     currentDraft.upcomingMatches.find((match) => String(match.id) === String(currentDraft.hero.featuredMatchId)) ?? currentDraft.nextMatch;
 
+  const resolveHeroMatchIndex = (currentDraft) =>
+    currentDraft.upcomingMatches.findIndex((match) => String(match.id) === String(currentDraft.hero.featuredMatchId));
+
+  const updateHeroMatchField = (field, value) => {
+    const featuredIndex = resolveHeroMatchIndex(draft);
+
+    if (featuredIndex >= 0) {
+      updateArrayItem('upcomingMatches', featuredIndex, field, value);
+      return;
+    }
+
+    updateNestedField('nextMatch', field, value);
+  };
+
   const heroMatch = resolveHeroMatch(draft);
+  const heroMatchIndex = resolveHeroMatchIndex(draft);
+  const heroSponsors = [...draft.sponsors, ...draft.sponsors];
 
   const handleLoginSubmit = async (event) => {
     event.preventDefault();
@@ -342,6 +357,12 @@ export default function AdminPage() {
 
   const activeSectionMeta = sectionLinks.find((section) => section.id === activeSection) ?? sectionLinks[0];
 
+
+  const scrollToSection = (sectionId) => {
+    setActiveSection(sectionId);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   if (!isSupabaseConfigured) {
     return (
       <div className="admin-auth-shell">
@@ -381,38 +402,40 @@ export default function AdminPage() {
     return (
       <div className="admin-auth-shell">
         <div className="not-found-card admin-login-card">
-          <Link className="brand admin-brand" to="/">
+          <span className="admin-login-kicker">Noobs Control Room</span>
+
+          <Link className="brand admin-brand admin-login-brand" to="/">
             <img src="/images/logo1.png" alt="Noobs logo" className="brand-logo" />
-            <div>
-              <strong>Διαχείριση Noobs</strong>
-              <span>Σύνδεση με Supabase Auth</span>
+            <div className="brand-copy">
+              <strong>Διαχείριση Noobs BC</strong>
+              <span>Private Access</span>
             </div>
           </Link>
 
-          <h1>Σύνδεση διαχειριστή</h1>
-          <p>
-            Συνδέσου με email και password από χρήστη που έχεις δημιουργήσει στο Supabase Auth. Μόλις μπεις, κάθε αλλαγή
-            συγχρονίζεται live με το frontend.
-          </p>
+          <div className="admin-login-copy">
+            <h1>Σύνδεση διαχειριστή</h1>
+          </div>
 
           <form className="admin-login-form" onSubmit={handleLoginSubmit}>
             <label>
-              Email
+              <span>Email</span>
               <input
                 type="email"
                 value={loginForm.email}
                 onChange={(event) => setLoginForm((current) => ({ ...current, email: event.target.value }))}
                 autoComplete="email"
+                placeholder="admin@noobs.gr"
                 required
               />
             </label>
             <label>
-              Password
+              <span>Κωδικός πρόσβασης</span>
               <input
                 type="password"
                 value={loginForm.password}
                 onChange={(event) => setLoginForm((current) => ({ ...current, password: event.target.value }))}
                 autoComplete="current-password"
+                placeholder="Πληκτρολόγησε τον κωδικό σου"
                 required
               />
             </label>
@@ -421,7 +444,7 @@ export default function AdminPage() {
 
             <div className="admin-login-actions">
               <button type="submit" className="button" disabled={loginLoading}>
-                {loginLoading ? 'Σύνδεση...' : 'Είσοδος στο admin'}
+                {loginLoading ? 'Σύνδεση...' : 'Είσοδος'}
               </button>
               <Link className="button ghost" to="/">
                 Επιστροφή στο site
@@ -434,66 +457,50 @@ export default function AdminPage() {
   }
 
   return (
-    <div className="admin-shell">
-      <aside className="admin-rail">
-        <Link className="brand admin-brand" to="/">
-          <img src="/images/logo1.png" alt="Noobs logo" className="brand-logo" />
-          <div>
-            <strong>Διαχείριση Noobs</strong>
-          </div>
-        </Link>
-
-        <div className="admin-rail-card">
-          <span className={`admin-live-pill${isSaving ? ' is-saving' : ''}`}>{isSaving ? 'Live saving' : 'Live synced'}</span>
-          <strong>{user?.email}</strong>
-          <p className={`admin-status-msg${statusType === 'error' ? ' is-error' : ''}`}>{status}</p>
-          <small>
-            {lastSavedAt
-              ? `Τελευταία αποθήκευση: ${lastSavedAt.toLocaleTimeString('el-GR', { hour: '2-digit', minute: '2-digit' })}`
-              : 'Δεν έχει γίνει ακόμη αποθήκευση από αυτό το session.'}
-          </small>
-        </div>
-
-        <nav className="admin-section-nav" aria-label="Ενότητες διαχείρισης">
-          {sectionLinks.map((section) => (
-            <button
-              key={section.id}
-              type="button"
-              className={`admin-section-button${activeSection === section.id ? ' is-active' : ''}`}
-              onClick={() => setActiveSection(section.id)}
-            >
-              {section.label}
-            </button>
-          ))}
-        </nav>
-
-        <div className="admin-rail-actions">
-          <button type="button" className="button" onClick={publishNow} disabled={isSaving}>
-            {isSaving ? 'Αποθήκευση...' : 'Αποθήκευση τώρα'}
-          </button>
-          <button type="button" className="button ghost" onClick={handleLogout}>
-            Αποσύνδεση
-          </button>
-          <Link className="button ghost" to="/">
-            Επιστροφή στο site
+    <div className="admin-shell admin-studio-shell">
+      <header className="admin-studio-bar">
+        <div className="admin-studio-bar-main">
+          <Link className="brand admin-brand admin-studio-brand" to="/">
+            <img src="/images/logo1.png" alt="Noobs logo" className="brand-logo" />
+            <div className="brand-copy">
+              <strong>Διαχείριση Noobs BC</strong>
+              <span>Ζωντανή διαχείριση</span>
+            </div>
           </Link>
         </div>
-      </aside>
 
-      <main className="admin-builder" data-active-section={activeSection}>
-        <header className="admin-builder-hero">
-          <div>
-            <span className="pill">Noobs control room</span>
-            <h1>Διαχείριση περιεχομένου με άμεσο preview και live site sync</h1>
-            <p>
-              Το panel δείχνει μόνο τη section που θέλεις να δουλέψεις: επόμενος αγώνας, βαθμολογία, αποτελέσματα,
-              πρόγραμμα, ρόστερ, νέα ομάδας και χορηγοί.
-            </p>
-            <div className="admin-editor-note">
-              <strong>Τώρα επεξεργάζεσαι</strong>
-              <span>{activeSectionMeta.label}</span>
-            </div>
+        <div className="admin-studio-bar-side">
+          <div className="admin-rail-card admin-rail-card-compact">
+            <span className={`admin-live-pill${isSaving ? ' is-saving' : ''}`}>{isSaving ? 'Γίνεται αποθήκευση' : 'Συνδεδεμένος live'}</span>
+            <strong>{user?.email}</strong>
           </div>
+
+          <div className="admin-rail-actions admin-studio-actions">
+            <button type="button" className="button" onClick={publishNow} disabled={isSaving}>
+              {isSaving ? 'Αποθήκευση...' : 'Αποθήκευση'}
+            </button>
+            <button type="button" className="button ghost" onClick={handleLogout}>
+              Αποσύνδεση
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <nav className="admin-section-nav admin-studio-nav" aria-label="Ενότητες διαχείρισης">
+        {sectionLinks.map((section) => (
+          <button
+            key={section.id}
+            type="button"
+            className={`admin-section-button${activeSection === section.id ? ' is-active' : ''}`}
+            onClick={() => scrollToSection(section.id)}
+          >
+            {section.label}
+          </button>
+        ))}
+      </nav>
+
+      <main className="admin-builder admin-studio-main" data-active-section={activeSection}>
+        <header className="admin-builder-hero admin-studio-hero">
           <div className="admin-builder-summary">
             <article>
               <strong>{draft.upcomingMatches.length}</strong>
@@ -514,7 +521,51 @@ export default function AdminPage() {
           id="admin-next-match"
           title="Επόμενος αγώνας"
           description="Διάλεξε ποιος αγώνας του προγράμματος εμφανίζεται στο hero. Το countdown ακολουθεί live τη selected ημερομηνία."
-          preview={<CountdownPanel nextMatch={heroMatch} />}
+          preview={
+            <div className="admin-hero-preview">
+              <div className="hero-main-grid">
+                <div className="hero-aside">
+                  <CountdownPanel nextMatch={heroMatch} />
+                </div>
+
+                <aside className="hero-showcase" aria-label="Noobs και χορηγοί">
+                  <div className="hero-showcase-logo">
+                    <img src="/images/logo1.png" alt={draft.meta.shortName} className="hero-zoom-logo" />
+                  </div>
+
+                  <div className="hero-sponsors-loop">
+                    <div className="hero-sponsors-track">
+                      <a className="hero-sponsor-pill" href="https://www.basketaki.com" target="_blank" rel="noreferrer">
+                        <img src="/images/basketaki.png" alt="Basketaki The League" />
+                      </a>
+                      {heroSponsors.map((sponsor, index) => (
+                        <a
+                          key={`${sponsor.id}-${index}`}
+                          className="hero-sponsor-pill"
+                          href={sponsor.url}
+                          target="_blank"
+                          rel="noreferrer"
+                          aria-hidden={index >= draft.sponsors.length}
+                          tabIndex={index >= draft.sponsors.length ? -1 : undefined}
+                        >
+                          <img src={sponsor.image} alt={sponsor.name} />
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                </aside>
+              </div>
+
+              <div className="button-row hero-buttons admin-preview-hero-buttons">
+                <a className="button" href={draft.hero.primaryCta.href}>
+                  {draft.hero.primaryCta.label}
+                </a>
+                <a className="button ghost" href={draft.hero.secondaryCta.href}>
+                  {draft.hero.secondaryCta.label}
+                </a>
+              </div>
+            </div>
+          }
         >
           <div className="admin-editor-stack">
             <div className="admin-inline-grid two-columns">
@@ -536,8 +587,12 @@ export default function AdminPage() {
             </div>
 
             <div className="admin-editor-note">
-              <strong>Fallback / χειροκίνητος αγώνας</strong>
-              <span>Αν δεν θες να εμφανίζεται αγώνας από το πρόγραμμα, άφησε κενό το featured match και όρισε manual περιεχόμενο.</span>
+              <strong>{heroMatchIndex >= 0 ? 'Το hero διαβάζει τον επιλεγμένο αγώνα του προγράμματος' : 'Δεν έχει οριστεί featured αγώνας'}</strong>
+              <span>
+                {heroMatchIndex >= 0
+                  ? 'Κάθε αλλαγή σε αντίπαλο, venue, Google Maps link, ώρα ή λογότυπο ενημερώνει άμεσα το box του Επόμενου αγώνα στο frontend.'
+                  : 'Επίλεξε έναν αγώνα από τα cards πιο πάνω για να συνδεθεί σωστά το hero με το πρόγραμμα.'}
+              </span>
             </div>
 
             <div className="admin-grid compact two-columns">
@@ -558,28 +613,35 @@ export default function AdminPage() {
                 <input value={draft.hero.secondaryCta.href} onChange={(event) => updateDeepField('hero', 'secondaryCta', 'href', event.target.value)} />
               </label>
               <label>
-                Custom αντίπαλος
-                <input value={draft.nextMatch.opponent} onChange={(event) => updateNestedField('nextMatch', 'opponent', event.target.value)} />
+                Αντίπαλος hero
+                <input value={heroMatch.opponent} onChange={(event) => updateHeroMatchField('opponent', event.target.value)} />
               </label>
               <label>
-                Custom γήπεδο
-                <input value={draft.nextMatch.venue} onChange={(event) => updateNestedField('nextMatch', 'venue', event.target.value)} />
+                Venue hero
+                <input value={heroMatch.venue} onChange={(event) => updateHeroMatchField('venue', event.target.value)} />
               </label>
               <label>
                 Google Maps link
-                <input value={draft.nextMatch.mapUrl || ''} onChange={(event) => updateNestedField('nextMatch', 'mapUrl', event.target.value)} />
+                <input value={heroMatch.mapUrl || ''} onChange={(event) => updateHeroMatchField('mapUrl', event.target.value)} />
               </label>
               <label>
-                Custom διοργάνωση
-                <input value={draft.nextMatch.competition} onChange={(event) => updateNestedField('nextMatch', 'competition', event.target.value)} />
+                Διοργάνωση hero
+                <input value={heroMatch.competition} onChange={(event) => updateHeroMatchField('competition', event.target.value)} />
               </label>
               <label>
-                Custom ημερομηνία και ώρα
+                Ημερομηνία και ώρα hero
                 <input
                   type="datetime-local"
-                  value={toDateTimeLocal(draft.nextMatch.date)}
-                  onChange={(event) => updateNestedField('nextMatch', 'date', toIsoString(event.target.value))}
+                  value={toDateTimeLocal(heroMatch.date)}
+                  onChange={(event) => updateHeroMatchField('date', toIsoString(event.target.value))}
                 />
+              </label>
+              <label>
+                Logo αντιπάλου hero (URL)
+                <div className="admin-logo-preview-row">
+                  {heroMatch.opponentLogo && <img src={heroMatch.opponentLogo} alt="" className="admin-logo-thumb" />}
+                  <input value={heroMatch.opponentLogo || ''} onChange={(event) => updateHeroMatchField('opponentLogo', event.target.value)} />
+                </div>
               </label>
             </div>
           </div>
@@ -841,22 +903,7 @@ export default function AdminPage() {
           id="admin-roster"
           title="Ρόστερ"
           description="Άλλαξε τη σειρά των παικτών, ενημέρωσε στοιχεία και φωτογραφίες και το roster section ακολουθεί live."
-          preview={
-            <div className="roster-grid admin-preview-roster">
-              {draft.players.map((player) => (
-                <article key={player.id} className="player-card">
-                  <div className="player-card-photo">
-                    <img src={player.photo} alt={player.name} />
-                    <span className="player-card-number">#{player.number}</span>
-                  </div>
-                  <div className="player-card-info">
-                    <span>{player.position}</span>
-                    <h3>{player.name}</h3>
-                  </div>
-                </article>
-              ))}
-            </div>
-          }
+          preview={<RosterCarousel players={draft.players} onSelectPlayer={setPreviewPlayer} />}
           actions={
             <button type="button" className="button" onClick={() => addArrayItem('players', emptyPlayer)}>
               Προσθήκη παίκτη
@@ -1029,6 +1076,8 @@ export default function AdminPage() {
           </div>
         </AdminSection>
       </main>
+
+      <PlayerModal player={previewPlayer} onClose={() => setPreviewPlayer(null)} />
     </div>
   );
 }
