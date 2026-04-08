@@ -903,7 +903,7 @@ export default function AdminPage() {
           id="admin-roster"
           title="Ρόστερ"
           description="Άλλαξε τη σειρά των παικτών, ενημέρωσε στοιχεία και φωτογραφίες και το roster section ακολουθεί live."
-          preview={<RosterCarousel players={draft.players} onSelectPlayer={setPreviewPlayer} />}
+          preview={<div className="admin-roster-realview"><RosterCarousel players={draft.players} onSelectPlayer={setPreviewPlayer} /></div>}
           actions={
             <button type="button" className="button" onClick={() => addArrayItem('players', emptyPlayer)}>
               Προσθήκη παίκτη

@@ -1,6 +1,29 @@
 ﻿import { formatFullMatchDate } from '../../utils/format';
 import { resolveLocationUrl } from '../../utils/location';
 
+function CalendarIcon() {
+  return (
+    <svg
+      className="upcoming-calendar-icon"
+      xmlns="http://www.w3.org/2000/svg"
+      width="15"
+      height="15"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+      <line x1="16" y1="2" x2="16" y2="6" />
+      <line x1="8" y1="2" x2="8" y2="6" />
+      <line x1="3" y1="10" x2="21" y2="10" />
+    </svg>
+  );
+}
+
 function LocationIcon() {
   return (
     <svg
@@ -36,7 +59,7 @@ export default function UpcomingMatchesList({ matches }) {
           <article key={match.id} className="upcoming-item">
             <div className="upcoming-item-date">
               <span className="upcoming-item-competition">{match.competition}</span>
-              <strong>{formatFullMatchDate(match.date)}</strong>
+              <strong className="upcoming-date-line"><CalendarIcon />{formatFullMatchDate(match.date)}</strong>
             </div>
 
             <div className="upcoming-item-main">
@@ -45,7 +68,7 @@ export default function UpcomingMatchesList({ matches }) {
                   <img src={homeLogo} alt="" className="upcoming-team-logo" aria-hidden="true" />
                   <span className="upcoming-team-name">{homeName}</span>
                 </span>
-                <span className="upcoming-vs">VS</span>
+                <span className="upcoming-vs"><span className="upcoming-vs-line" aria-hidden="true" /><span className="upcoming-vs-badge">VS</span><span className="upcoming-vs-line" aria-hidden="true" /></span>
                 <span className="upcoming-team-card is-away">
                   <img src={awayLogo} alt="" className="upcoming-team-logo" aria-hidden="true" />
                   <span className="upcoming-team-name">{awayName}</span>
