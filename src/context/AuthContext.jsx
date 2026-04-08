@@ -1,4 +1,4 @@
-﻿import { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import { isSupabaseConfigured, supabase } from '../lib/supabaseClient';
 
 const AuthContext = createContext(null);
@@ -59,19 +59,36 @@ export function AuthProvider({ children }) {
       user: session?.user ?? null,
       isAuthenticated: Boolean(session?.user),
       authLoading,
-      async signIn(credentials) {
+      async signIn(credentialsOrEmail, password) {
         if (!supabase) {
-          return { error: new Error('Λείπει η ρύθμιση του Supabase.') };
+          throw new Error('?????? ? ??????? ??? Supabase.');
         }
 
-        return supabase.auth.signInWithPassword(credentials);
+        const credentials =
+          typeof credentialsOrEmail === 'string'
+            ? { email: credentialsOrEmail, password }
+            : credentialsOrEmail;
+
+        const { data, error } = await supabase.auth.signInWithPassword(credentials);
+
+        if (error) {
+          throw error;
+        }
+
+        return data;
       },
       async signOut() {
         if (!supabase) {
-          return { error: null };
+          return null;
         }
 
-        return supabase.auth.signOut();
+        const { error } = await supabase.auth.signOut();
+
+        if (error) {
+          throw error;
+        }
+
+        return null;
       }
     }),
     [authLoading, session]

@@ -3923,7 +3923,10 @@ tr.is-highlighted:hover {
 
 .standings-card {
   padding: 0;
-  overflow: hidden;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
 }
 
 .standings-group-title {
@@ -4513,3 +4516,37 @@ body.modal-open {
   }
 }
 
+
+/* Footer aligned with header skin */
+.footer-grid {
+  border: 1px solid rgba(244, 198, 61, 0.16);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.03), transparent 42%),
+    #0b1118;
+  backdrop-filter: blur(28px) saturate(1.5);
+  -webkit-backdrop-filter: blur(28px) saturate(1.5);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.42);
+}
+
+.footer-grid::before {
+  background: linear-gradient(90deg, transparent, rgba(244, 198, 61, 0.24) 40%, rgba(244, 198, 61, 0.12) 60%, transparent);
+}
+
+@media (max-width: 780px) {
+  .hero-section::after {
+    width: calc(100% - 20px);
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.08) 16%,
+      rgba(244, 198, 61, 0.28) 50%,
+      rgba(255, 255, 255, 0.08) 84%,
+      transparent 100%
+    );
+    box-shadow: 0 0 20px rgba(244, 198, 61, 0.12);
+  }
+
+  .hero-buttons {
+    display: none;
+  }
+}
