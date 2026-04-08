@@ -82,7 +82,7 @@ export default function SiteShell() {
         <Link className="brand" to="/">
           <img src="/images/logo.png" alt="Λογότυπο Noobs" className="brand-logo" />
           <div className="brand-copy">
-            <strong>{siteData.meta.shortName}</strong>
+            <strong>{siteData.meta.shortName} BC</strong>
           </div>
         </Link>
 
@@ -122,6 +122,16 @@ export default function SiteShell() {
         <Outlet />
       </main>
 
+      <div className="pre-footer-note">
+        <p>
+          Για παραπάνω λεπτομέρειες επισκεφθείτε το{' '}
+          <a href="https://www.basketaki.com" target="_blank" rel="noreferrer" className="pre-footer-link">
+            basketaki.com
+          </a>
+          !
+        </p>
+      </div>
+
       <footer className="site-footer">
         <div className="footer-grid">
           <div className="footer-copy">© 2026 Noobs. Όλα τα δικαιώματα διατηρούνται.</div>
@@ -153,3 +163,5 @@ export default function SiteShell() {
     </div>
   );
 }
+
+

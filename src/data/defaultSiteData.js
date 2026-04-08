@@ -66,8 +66,8 @@ export const defaultSiteData = {
     tagline: 'Παίζουμε σκληρά, χάνουμε σπάνια, κερδίζουμε μαζί.',
     description:
       'Η επίσημη ιστοσελίδα της ομάδας Noobs στη Basketaki The League. Βαθμολογία, αποτελέσματα, ρόστερ και νέα απευθείας από το γήπεδο.',
-    instagramHandle: '@noobsbc',
-    instagramUrl: 'https://instagram.com/noobsbc'
+    instagramHandle: '@noobs.gr',
+    instagramUrl: 'https://instagram.com/noobs.gr'
   },
   hero: {
     eyebrow: 'Basketaki The League',
@@ -108,6 +108,7 @@ export const defaultSiteData = {
       opponent: 'Fast Breakers',
       opponentLogo: '/images/basketaki.png',
       venue: 'Galatsi Dome',
+      mapUrl: 'https://www.google.com/maps/search/?api=1&query=Galatsi+Dome',
       competition: 'Basketaki The League',
       home: false,
       note: 'Σημείο συνάντησης ομάδας 60 λεπτά πριν από το παιχνίδι.'
@@ -221,7 +222,8 @@ export const defaultSiteData = {
       awayLogo: '/images/basketaki.png',
       homeScore: 78,
       awayScore: 70,
-      venue: 'Galatsi Dome'
+      venue: 'Galatsi Dome',
+      mapUrl: 'https://www.google.com/maps/search/?api=1&query=Galatsi+Dome'
     },
     {
       id: 2,
@@ -344,7 +346,7 @@ export const defaultSiteData = {
       caption: '',
       likes: 0,
       comments: 0,
-      href: 'https://instagram.com/noobsbc'
+      href: 'https://instagram.com/noobs.gr'
     },
     {
       id: 2,
@@ -352,7 +354,7 @@ export const defaultSiteData = {
       caption: '',
       likes: 0,
       comments: 0,
-      href: 'https://instagram.com/noobsbc'
+      href: 'https://instagram.com/noobs.gr'
     },
     {
       id: 3,
@@ -360,7 +362,7 @@ export const defaultSiteData = {
       caption: '',
       likes: 0,
       comments: 0,
-      href: 'https://instagram.com/noobsbc'
+      href: 'https://instagram.com/noobs.gr'
     }
   ]
 };

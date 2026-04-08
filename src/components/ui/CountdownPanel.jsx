@@ -1,5 +1,6 @@
 ﻿import { useCountdown } from '../../hooks/useCountdown';
 import { formatMatchDate } from '../../utils/format';
+import { resolveLocationUrl } from '../../utils/location';
 
 function LocationIcon() {
   return (
@@ -31,15 +32,34 @@ export default function CountdownPanel({ nextMatch }) {
     { label: 'ΔΕΥΤ.', value: countdown.seconds, isSeconds: true }
   ];
 
+  const locationUrl = resolveLocationUrl(nextMatch.mapUrl, nextMatch.venue);
+
   return (
     <article className="countdown-panel">
       <div className="countdown-copy">
         <span className="pill">ΕΠΟΜΕΝΟΣ ΑΓΩΝΑΣ</span>
-        <h3>{nextMatch.opponent}</h3>
-        <p className="countdown-location-line">
-          <LocationIcon />
-          <span>{nextMatch.venue}</span>
-        </p>
+        <div className="countdown-matchup">
+          <span className="countdown-team-card is-home">
+            <img src="/images/logo.png" alt="" className="countdown-team-logo" aria-hidden="true" />
+            <span className="countdown-team-name">Noobs</span>
+          </span>
+          <span className="countdown-vs">VS</span>
+          <span className="countdown-team-card is-away">
+            <img src={nextMatch.opponentLogo || '/images/basketaki.png'} alt="" className="countdown-team-logo" aria-hidden="true" />
+            <span className="countdown-team-name">{nextMatch.opponent}</span>
+          </span>
+        </div>
+        {locationUrl ? (
+          <a className="countdown-location-line location-link" href={locationUrl} target="_blank" rel="noreferrer">
+            <LocationIcon />
+            <span>{nextMatch.venue}</span>
+          </a>
+        ) : (
+          <p className="countdown-location-line">
+            <LocationIcon />
+            <span>{nextMatch.venue}</span>
+          </p>
+        )}
         <strong>{formatMatchDate(nextMatch.date)}</strong>
       </div>
 

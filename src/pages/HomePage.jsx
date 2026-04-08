@@ -4,6 +4,7 @@ import CountdownPanel from '../components/ui/CountdownPanel';
 import InstaCarousel from '../components/ui/InstaCarousel';
 import LatestScoresStrip from '../components/ui/LatestScoresStrip';
 import PlayerModal from '../components/ui/PlayerModal';
+import RosterCarousel from '../components/ui/RosterCarousel';
 import SectionHeading from '../components/ui/SectionHeading';
 import StandingsTable from '../components/ui/StandingsTable';
 import UpcomingMatchesList from '../components/ui/UpcomingMatchesList';
@@ -75,7 +76,7 @@ export default function HomePage() {
       </section>
 
       <section className="section-block" id="standings">
-        <div className="split-heading" data-animate>
+        <div className="split-heading standings-heading" data-animate>
           <SectionHeading eyebrow="Βαθμολογία" title="Η βαθμολογική μας κατάταξη." />
           <a className="league-mark" href="https://www.basketaki.com" target="_blank" rel="noreferrer">
             <img src="/images/basketaki.png" alt="Basketaki The League" />
@@ -107,27 +108,7 @@ export default function HomePage() {
           <SectionHeading eyebrow="Ρόστερ" title="Οι παίκτες μας." />
         </div>
 
-        <div className="roster-grid">
-          {siteData.players.map((player, index) => (
-            <button
-              key={player.id}
-              type="button"
-              className="player-card"
-              onClick={() => setSelectedPlayer(player)}
-              data-animate
-              style={{ '--anim-delay': `${index * 0.07}s` }}
-            >
-              <div className="player-card-photo">
-                <img src={player.photo} alt={player.name} />
-                <span className="player-card-number">#{player.number}</span>
-              </div>
-              <div className="player-card-info">
-                <span>{player.position}</span>
-                <h3>{player.name}</h3>
-              </div>
-            </button>
-          ))}
-        </div>
+        <RosterCarousel players={siteData.players} onSelectPlayer={setSelectedPlayer} />
       </section>
 
       <section className="section-block" id="news">
@@ -180,3 +161,4 @@ export default function HomePage() {
     </>
   );
 }
+

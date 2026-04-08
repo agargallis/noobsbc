@@ -35,10 +35,6 @@ export default function InstaCarousel({ posts, instagramUrl }) {
               </div>
               <div className="insta-card-body">
                 <p>{post.caption}</p>
-                <div className="insta-card-meta">
-                  <span>Likes {post.likes}</span>
-                  <span>Σχόλια {post.comments}</span>
-                </div>
               </div>
             </a>
           ))}
@@ -94,3 +90,4 @@ export default function InstaCarousel({ posts, instagramUrl }) {
     </div>
   );
 }
+

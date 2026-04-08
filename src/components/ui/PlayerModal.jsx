@@ -2,15 +2,24 @@ import { useEffect } from 'react';
 
 export default function PlayerModal({ player, onClose }) {
   useEffect(() => {
-    if (!player) return;
+    if (!player) {
+      document.body.classList.remove('modal-open');
+      return undefined;
+    }
+
     const onKey = (event) => {
       if (event.key === 'Escape') {
         onClose();
       }
     };
 
+    document.body.classList.add('modal-open');
     window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
+
+    return () => {
+      document.body.classList.remove('modal-open');
+      window.removeEventListener('keydown', onKey);
+    };
   }, [player, onClose]);
 
   if (!player) {

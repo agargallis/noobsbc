@@ -1,7 +1,42 @@
-import { defaultSiteData } from './defaultSiteData';
+﻿import { defaultSiteData } from './defaultSiteData';
 import { isSupabaseConfigured, SITE_CONTENT_SLUG, SITE_CONTENT_TABLE, supabase } from '../lib/supabaseClient';
 
 const STORAGE_KEY = 'noobs-site-data-v3';
+const INSTAGRAM_CANONICAL_URL = 'https://instagram.com/noobs.gr';
+
+const normalizeInstagramUrl = (value) => {
+  if (!value || typeof value !== 'string') {
+    return INSTAGRAM_CANONICAL_URL;
+  }
+
+  const trimmed = value.trim();
+
+  if (!trimmed) {
+    return INSTAGRAM_CANONICAL_URL;
+  }
+
+  if (trimmed.includes('instagram.com/noobs.gr')) {
+    return INSTAGRAM_CANONICAL_URL;
+  }
+
+  return trimmed;
+};
+
+const sanitizeSiteData = (value) => {
+  const merged = mergeSiteData(value);
+
+  merged.meta = {
+    ...merged.meta,
+    instagramUrl: normalizeInstagramUrl(merged.meta?.instagramUrl)
+  };
+
+  merged.instagramPosts = merged.instagramPosts.map((post) => ({
+    ...post,
+    href: normalizeInstagramUrl(post?.href)
+  }));
+
+  return merged;
+};
 
 const clone = (value) => JSON.parse(JSON.stringify(value));
 
@@ -48,7 +83,7 @@ const loadLocal = () => {
       return clone(defaultSiteData);
     }
 
-    return mergeSiteData(JSON.parse(raw));
+    return sanitizeSiteData(JSON.parse(raw));
   } catch (error) {
     console.error('Failed to load local site data:', error);
     return clone(defaultSiteData);
@@ -65,7 +100,7 @@ const saveLocal = (nextValue) => {
 
 export const siteRepository = {
   normalize(value) {
-    return mergeSiteData(value);
+    return sanitizeSiteData(value);
   },
 
   async load() {
@@ -92,7 +127,7 @@ export const siteRepository = {
         return clone(defaultSiteData);
       }
 
-      const merged = mergeSiteData(data.payload);
+      const merged = sanitizeSiteData(data.payload);
       saveLocal(merged);
       return merged;
     } catch (error) {
@@ -102,7 +137,7 @@ export const siteRepository = {
   },
 
   async save(nextValue) {
-    const cleanValue = mergeSiteData(clone(nextValue));
+    const cleanValue = sanitizeSiteData(clone(nextValue));
 
     if (typeof window !== 'undefined') {
       saveLocal(cleanValue);

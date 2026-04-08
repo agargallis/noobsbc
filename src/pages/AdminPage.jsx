@@ -36,7 +36,8 @@ const emptyLatestMatch = () => ({
   awayLogo: '/images/basketaki.png',
   homeScore: 0,
   awayScore: 0,
-  venue: ''
+  venue: '',
+  mapUrl: ''
 });
 
 const emptyUpcomingMatch = () => ({
@@ -45,6 +46,7 @@ const emptyUpcomingMatch = () => ({
   opponent: '',
   opponentLogo: '/images/basketaki.png',
   venue: '',
+  mapUrl: '',
   competition: 'Basketaki The League',
   home: true
 });
@@ -68,7 +70,7 @@ const emptyInstagramPost = () => ({
   caption: '',
   likes: 0,
   comments: 0,
-  href: 'https://instagram.com/noobsbc'
+  href: 'https://instagram.com/noobs.gr'
 });
 
 const emptySponsor = () => ({
@@ -127,7 +129,7 @@ function AdminSection({ id, title, description, preview, actions, children }) {
 
 export default function AdminPage() {
   const { isSupabaseConfigured, authLoading, isAuthenticated, signIn, signOut, user } = useAuth();
-  const { siteData, siteDataLoading, saveSiteData, resetSiteData, refreshSiteData, siteDataError } = useSiteData();
+  const { siteData, siteDataLoading, saveSiteData, siteDataError } = useSiteData();
 
   const [draft, setDraft] = useState(() => clone(siteData));
   const [activeSection, setActiveSection] = useState('admin-next-match');
@@ -286,6 +288,33 @@ export default function AdminPage() {
 
   const heroMatch = resolveHeroMatch(draft);
 
+  const handleLoginSubmit = async (event) => {
+    event.preventDefault();
+    setLoginLoading(true);
+    setLoginError('');
+
+    try {
+      await signIn(loginForm.email, loginForm.password);
+      setStatus('Η σύνδεση ολοκληρώθηκε. Το panel είναι έτοιμο για αλλαγές.');
+      setStatusType('ok');
+      setLoginForm({ email: '', password: '' });
+    } catch (error) {
+      setLoginError(error.message || 'Η σύνδεση απέτυχε.');
+      setStatus('Η σύνδεση απέτυχε. Έλεγξε τα στοιχεία σου.');
+      setStatusType('error');
+    } finally {
+      setLoginLoading(false);
+    }
+  };
+
+  const handleLogout = async () => {
+    window.clearTimeout(autoSaveTimerRef.current);
+    await signOut();
+    setStatus('Έγινε αποσύνδεση από το panel διαχείρισης.');
+    setStatusType('ok');
+    setHasPendingChanges(false);
+  };
+
   const publishNow = async () => {
     window.clearTimeout(autoSaveTimerRef.current);
     setIsSaving(true);
@@ -301,70 +330,6 @@ export default function AdminPage() {
     } finally {
       setIsSaving(false);
     }
-  };
-
-  const restoreDefaults = async () => {
-    window.clearTimeout(autoSaveTimerRef.current);
-    setIsSaving(true);
-    try {
-      const resetValue = await resetSiteData();
-      setDraft(clone(resetValue));
-      setHasPendingChanges(false);
-      setLastSavedAt(new Date());
-      setStatus('Έγινε επαναφορά στα προεπιλεγμένα δεδομένα.');
-      setStatusType('ok');
-    } catch (error) {
-      setStatus(`Η επαναφορά απέτυχε: ${error.message}`);
-      setStatusType('error');
-    } finally {
-      setIsSaving(false);
-    }
-  };
-
-  const syncFromSupabase = async () => {
-    window.clearTimeout(autoSaveTimerRef.current);
-    setIsSaving(true);
-    try {
-      const freshData = await refreshSiteData();
-      setDraft(clone(freshData));
-      setHasPendingChanges(false);
-      setStatus('Το panel συγχρονίστηκε με τα live δεδομένα.');
-      setStatusType('ok');
-    } catch (error) {
-      setStatus(`Ο συγχρονισμός απέτυχε: ${error.message}`);
-      setStatusType('error');
-    } finally {
-      setIsSaving(false);
-    }
-  };
-
-  const handleLoginSubmit = async (event) => {
-    event.preventDefault();
-    setLoginLoading(true);
-    setLoginError('');
-
-    const { error } = await signIn({
-      email: loginForm.email.trim(),
-      password: loginForm.password
-    });
-
-    if (error) {
-      setLoginError(error.message);
-      setStatus('Η είσοδος απέτυχε. Έλεγξε τα στοιχεία του Supabase user.');
-      setStatusType('error');
-    } else {
-      setStatus('Συνδέθηκες επιτυχώς. Οι αλλαγές γράφονται live.');
-      setStatusType('ok');
-    }
-
-    setLoginLoading(false);
-  };
-
-  const handleLogout = async () => {
-    window.clearTimeout(autoSaveTimerRef.current);
-    await signOut();
-    setStatus('Έγινε αποσύνδεση από το panel διαχείρισης.');
-    setStatusType('ok');
   };
 
   const sectionLinks = [
@@ -508,12 +473,6 @@ export default function AdminPage() {
           <button type="button" className="button" onClick={publishNow} disabled={isSaving}>
             {isSaving ? 'Αποθήκευση...' : 'Αποθήκευση τώρα'}
           </button>
-          <button type="button" className="button ghost" onClick={syncFromSupabase} disabled={isSaving}>
-            Συγχρονισμός live
-          </button>
-          <button type="button" className="button ghost" onClick={restoreDefaults} disabled={isSaving}>
-            Επαναφορά προεπιλογών
-          </button>
           <button type="button" className="button ghost" onClick={handleLogout}>
             Αποσύνδεση
           </button>
@@ -607,6 +566,10 @@ export default function AdminPage() {
               <label>
                 Custom γήπεδο
                 <input value={draft.nextMatch.venue} onChange={(event) => updateNestedField('nextMatch', 'venue', event.target.value)} />
+              </label>
+              <label>
+                Google Maps link
+                <input value={draft.nextMatch.mapUrl || ''} onChange={(event) => updateNestedField('nextMatch', 'mapUrl', event.target.value)} />
               </label>
               <label>
                 Custom διοργάνωση
@@ -773,6 +736,10 @@ export default function AdminPage() {
                     <input value={match.venue} onChange={(event) => updateArrayItem('latestMatches', index, 'venue', event.target.value)} />
                   </label>
                   <label>
+                    Google Maps link
+                    <input value={match.mapUrl || ''} onChange={(event) => updateArrayItem('latestMatches', index, 'mapUrl', event.target.value)} />
+                  </label>
+                  <label>
                     Logo γηπεδούχου (URL)
                     <div className="admin-logo-preview-row">
                       {match.homeLogo && <img src={match.homeLogo} alt="" className="admin-logo-thumb" />}
@@ -838,6 +805,10 @@ export default function AdminPage() {
                     <label>
                       Γήπεδο
                       <input value={match.venue} onChange={(event) => updateArrayItem('upcomingMatches', index, 'venue', event.target.value)} />
+                    </label>
+                    <label>
+                      Google Maps link
+                      <input value={match.mapUrl || ''} onChange={(event) => updateArrayItem('upcomingMatches', index, 'mapUrl', event.target.value)} />
                     </label>
                     <label>
                       Διοργάνωση
@@ -959,7 +930,7 @@ export default function AdminPage() {
         <AdminSection
           id="admin-news"
           title="Νέα ομάδας"
-          description="Διαχειρίζεσαι το carousel της ενότητας Νέα ομάδας με εικόνα, caption, likes, comments και link για κάθε card."
+          description="Διαχειρίζεσαι το carousel της ενότητας Νέα ομάδας με εικόνα, caption και link για κάθε card."
           preview={<InstaCarousel posts={draft.instagramPosts} instagramUrl={draft.meta.instagramUrl} />}
           actions={
             <button type="button" className="button" onClick={() => addArrayItem('instagramPosts', emptyInstagramPost)}>
@@ -990,14 +961,6 @@ export default function AdminPage() {
                   <label className="full-span">
                     Caption
                     <textarea value={post.caption} onChange={(event) => updateArrayItem('instagramPosts', index, 'caption', event.target.value)} />
-                  </label>
-                  <label>
-                    Likes
-                    <input type="number" value={post.likes} onChange={(event) => updateArrayItem('instagramPosts', index, 'likes', fieldNumber(event.target.value))} />
-                  </label>
-                  <label>
-                    Comments
-                    <input type="number" value={post.comments} onChange={(event) => updateArrayItem('instagramPosts', index, 'comments', fieldNumber(event.target.value))} />
                   </label>
                   <label>
                     URL εικόνας
@@ -1079,3 +1042,10 @@ export default function AdminPage() {
     </div>
   );
 }
+
+
+
+
+
+
+
