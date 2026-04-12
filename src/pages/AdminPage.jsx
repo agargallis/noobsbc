@@ -219,11 +219,16 @@ export default function AdminPage() {
     });
   };
 
-  const addArrayItem = (section, factory) => {
-    applyDraft((current) => ({
-      ...current,
-      [section]: [...current[section], factory()]
-    }));
+  const addArrayItem = (section, factory, position = 'end') => {
+    applyDraft((current) => {
+      const newItem = factory();
+      const items = position === 'start' ? [newItem, ...current[section]] : [...current[section], newItem];
+
+      return {
+        ...current,
+        [section]: items
+      };
+    });
   };
 
   const removeArrayItem = (section, index) => {
@@ -970,7 +975,7 @@ export default function AdminPage() {
           description="Διαχειρίζεσαι το carousel της ενότητας Νέα ομάδας με εικόνα, caption και link για κάθε card."
           preview={<InstaCarousel posts={draft.instagramPosts} instagramUrl={draft.meta.instagramUrl} />}
           actions={
-            <button type="button" className="button" onClick={() => addArrayItem('instagramPosts', emptyInstagramPost)}>
+            <button type="button" className="button" onClick={() => addArrayItem('instagramPosts', emptyInstagramPost, 'start')}>
               Προσθήκη card
             </button>
           }
