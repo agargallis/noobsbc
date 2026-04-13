@@ -125,7 +125,7 @@ export default function SiteShell() {
       <div className="pre-footer-note">
         <p>
           Για παραπάνω λεπτομέρειες επισκεφθείτε το{' '}
-          <a href="https://www.basketaki.com" target="_blank" rel="noreferrer" className="pre-footer-link">
+          <a href="https://www.basketaki.com/teams/noobs/profile" target="_blank" rel="noreferrer" className="pre-footer-link">
             basketaki.com
           </a>
           !
