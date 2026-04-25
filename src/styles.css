@@ -3561,11 +3561,17 @@ tr.is-highlighted:hover {
   gap: 20px;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
-  justify-content: center;
+  overscroll-behavior-x: contain;
+  justify-content: flex-start;
   align-items: flex-start;
   scroll-padding-inline: 0;
+}
+
+.insta-track.is-static {
+  justify-content: center;
 }
 
 .insta-track::-webkit-scrollbar {
@@ -3647,7 +3653,7 @@ tr.is-highlighted:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 16px;
+  gap: 10px;
 }
 
 .insta-arrow {
@@ -3697,6 +3703,11 @@ tr.is-highlighted:hover {
   background: var(--brand);
   width: 22px;
   border-radius: 4px;
+}
+
+.insta-dot:disabled {
+  opacity: 0.28;
+  cursor: default;
 }
 
 .insta-cta {

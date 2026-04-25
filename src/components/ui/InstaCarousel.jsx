@@ -2,61 +2,124 @@
 
 export default function InstaCarousel({ posts, instagramUrl }) {
   const trackRef = useRef(null);
+  const scrollFrameRef = useRef(null);
   const [index, setIndex] = useState(0);
+  const [maxIndex, setMaxIndex] = useState(0);
   const total = posts.length;
 
   const getCards = () => Array.from(trackRef.current?.children ?? []);
 
+  const getMaxIndex = () => {
+    const track = trackRef.current;
+    const cards = getCards();
+
+    if (!track || !cards.length) {
+      return 0;
+    }
+
+    const canScroll = track.scrollWidth > track.clientWidth + 1;
+    return canScroll ? cards.length - 1 : 0;
+  };
+
+  const getTargetLeft = (card) => {
+    const track = trackRef.current;
+
+    if (!track || !card) {
+      return 0;
+    }
+
+    const maxScrollLeft = Math.max(0, track.scrollWidth - track.clientWidth);
+    return Math.min(card.offsetLeft, maxScrollLeft);
+  };
+
+  const measureScrollBounds = () => {
+    const nextMaxIndex = getMaxIndex();
+
+    setMaxIndex(nextMaxIndex);
+    setIndex((currentIndex) => Math.min(currentIndex, nextMaxIndex));
+  };
+
   const scrollToCard = (targetIndex, behavior = 'smooth') => {
     const cards = getCards();
-    const targetCard = cards[targetIndex];
+    const targetCard = cards[Math.max(0, Math.min(getMaxIndex(), targetIndex))];
     if (!trackRef.current || !targetCard) {
       return;
     }
 
     trackRef.current.scrollTo({
-      left: targetCard.offsetLeft,
+      left: getTargetLeft(targetCard),
       behavior,
     });
   };
 
   const goTo = (targetIndex) => {
-    const clamped = Math.max(0, Math.min(total - 1, targetIndex));
+    const clamped = Math.max(0, Math.min(getMaxIndex(), targetIndex));
     setIndex(clamped);
     scrollToCard(clamped);
   };
 
   const onScroll = () => {
-    const track = trackRef.current;
-    const cards = getCards();
-    if (!track || !cards.length) {
-      return;
+    if (scrollFrameRef.current) {
+      cancelAnimationFrame(scrollFrameRef.current);
     }
 
-    const currentLeft = track.scrollLeft;
-    let nearestIndex = 0;
-    let nearestDistance = Number.POSITIVE_INFINITY;
-
-    cards.forEach((card, cardIndex) => {
-      const distance = Math.abs(card.offsetLeft - currentLeft);
-      if (distance < nearestDistance) {
-        nearestDistance = distance;
-        nearestIndex = cardIndex;
+    scrollFrameRef.current = requestAnimationFrame(() => {
+      const track = trackRef.current;
+      const cards = getCards();
+      if (!track || !cards.length) {
+        return;
       }
-    });
 
-    setIndex((currentIndex) => (currentIndex === nearestIndex ? currentIndex : nearestIndex));
+      const currentLeft = track.scrollLeft;
+      const currentMaxIndex = getMaxIndex();
+      let nearestIndex = 0;
+      let nearestDistance = Number.POSITIVE_INFINITY;
+
+      cards.forEach((card, cardIndex) => {
+        const distance = Math.abs(getTargetLeft(card) - currentLeft);
+        if (distance <= nearestDistance) {
+          nearestDistance = distance;
+          nearestIndex = cardIndex;
+        }
+      });
+
+      setMaxIndex(currentMaxIndex);
+      setIndex((currentIndex) => (currentIndex === nearestIndex ? currentIndex : nearestIndex));
+    });
   };
 
   useEffect(() => {
     setIndex(0);
-    requestAnimationFrame(() => scrollToCard(0, 'auto'));
+    const frame = requestAnimationFrame(() => {
+      measureScrollBounds();
+      scrollToCard(0, 'auto');
+    });
+
+    return () => cancelAnimationFrame(frame);
   }, [posts]);
+
+  useEffect(() => {
+    const track = trackRef.current;
+
+    if (!track) {
+      return undefined;
+    }
+
+    const observer = new ResizeObserver(measureScrollBounds);
+    observer.observe(track);
+
+    return () => {
+      observer.disconnect();
+      if (scrollFrameRef.current) {
+        cancelAnimationFrame(scrollFrameRef.current);
+      }
+    };
+  }, []);
 
   return (
     <div className="insta-carousel">
       <div className="insta-track-outer">
-        <div className="insta-track" ref={trackRef} onScroll={onScroll}>
+        <div className={`insta-track${maxIndex > 0 ? ' is-scrollable' : ' is-static'}`} ref={trackRef} onScroll={onScroll}>
           {posts.map((post) => (
             <a key={post.id} href={post.href} target="_blank" rel="noreferrer" className="insta-card">
               <div className="insta-card-img">
@@ -82,25 +145,11 @@ export default function InstaCarousel({ posts, instagramUrl }) {
           ←
         </button>
 
-        <div className="insta-dots" role="tablist">
-          {posts.map((_, i) => (
-            <button
-              key={i}
-              type="button"
-              role="tab"
-              className={`insta-dot${i === index ? ' is-active' : ''}`}
-              onClick={() => goTo(i)}
-              aria-label={`Post ${i + 1}`}
-              aria-selected={i === index}
-            />
-          ))}
-        </div>
-
         <button
           type="button"
           className="insta-arrow"
           onClick={() => goTo(index + 1)}
-          disabled={index >= total - 1}
+          disabled={index >= maxIndex || total <= 1}
           aria-label="Επόμενο"
         >
           →
