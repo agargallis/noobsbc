@@ -49,7 +49,7 @@ export default function LatestScoresStrip({ matches }) {
   const visibleMatches = matches.filter((match) => !match.hidden);
 
   return (
-    <div className="scores-strip" id="scores">
+    <div className={`scores-strip count-${Math.min(visibleMatches.length, 3)}`} id="scores">
       {visibleMatches.map((match) => {
         const homeWon = match.homeScore > match.awayScore;
         const awayWon = match.awayScore > match.homeScore;
