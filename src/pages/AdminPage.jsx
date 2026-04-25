@@ -40,7 +40,8 @@ const emptyLatestMatch = () => ({
   homeScore: 0,
   awayScore: 0,
   venue: '',
-  mapUrl: ''
+  mapUrl: '',
+  hidden: false
 });
 
 const emptyUpcomingMatch = () => ({
@@ -51,7 +52,8 @@ const emptyUpcomingMatch = () => ({
   venue: '',
   mapUrl: '',
   competition: 'Basketaki The League',
-  home: true
+  home: true,
+  hidden: false
 });
 
 const emptyPlayer = () => ({
@@ -91,6 +93,8 @@ const toDateTimeLocal = (value) => {
 };
 
 const toIsoString = (value) => new Date(value).toISOString();
+
+const visibleItems = (items) => items.filter((item) => !item.hidden);
 
 const moveItem = (items, fromIndex, toIndex) => {
   const next = [...items];
@@ -747,7 +751,7 @@ export default function AdminPage() {
           id="admin-latest-results"
           title="Τελευταία αποτελέσματα"
           description="Τα score cards ενημερώνονται άμεσα. Άλλαξε σειρά, σκορ, ομάδες και venue με drag and drop."
-          preview={<LatestScoresStrip matches={draft.latestMatches} />}
+          preview={<LatestScoresStrip matches={visibleItems(draft.latestMatches)} />}
           actions={
             <button type="button" className="button" onClick={() => addArrayItem('latestMatches', emptyLatestMatch)}>
               Προσθήκη αποτελέσματος
@@ -758,7 +762,7 @@ export default function AdminPage() {
             {draft.latestMatches.map((match, index) => (
               <article
                 key={match.id}
-                className="admin-sortable-card"
+                className={`admin-sortable-card${match.hidden ? ' is-disabled' : ''}`}
                 draggable
                 onDragStart={() => startDragging('latestMatches', index)}
                 onDragOver={(event) => event.preventDefault()}
@@ -771,9 +775,18 @@ export default function AdminPage() {
                       {match.home || 'Γηπεδούχος'} - {match.away || 'Φιλοξενούμενος'}
                     </strong>
                   </div>
-                  <button type="button" className="button ghost" onClick={() => removeArrayItem('latestMatches', index)}>
-                    Αφαίρεση
-                  </button>
+                  <div className="admin-card-actions-inline">
+                    <button
+                      type="button"
+                      className="button ghost"
+                      onClick={() => updateArrayItem('latestMatches', index, 'hidden', !match.hidden)}
+                    >
+                      {match.hidden ? 'Ενεργοποίηση' : 'Προσωρινή απενεργοποίηση'}
+                    </button>
+                    <button type="button" className="button ghost" onClick={() => removeArrayItem('latestMatches', index)}>
+                      Αφαίρεση
+                    </button>
+                  </div>
                 </div>
                 <div className="admin-grid compact three-columns">
                   <label>
@@ -828,7 +841,7 @@ export default function AdminPage() {
           id="admin-schedule"
           title="Πρόγραμμα αγώνων"
           description="Το πρόγραμμα τροφοδοτεί και τη standalone section και το hero featured match."
-          preview={<UpcomingMatchesList matches={draft.upcomingMatches} />}
+          preview={<UpcomingMatchesList matches={visibleItems(draft.upcomingMatches)} />}
           actions={
             <button type="button" className="button" onClick={() => addArrayItem('upcomingMatches', emptyUpcomingMatch)}>
               Προσθήκη αγώνα
@@ -842,7 +855,7 @@ export default function AdminPage() {
               return (
                 <article
                   key={match.id}
-                  className={`admin-sortable-card${isHero ? ' is-featured' : ''}`}
+                  className={`admin-sortable-card${isHero ? ' is-featured' : ''}${match.hidden ? ' is-disabled' : ''}`}
                   draggable
                   onDragStart={() => startDragging('upcomingMatches', index)}
                   onDragOver={(event) => event.preventDefault()}
@@ -856,6 +869,13 @@ export default function AdminPage() {
                     <div className="admin-card-actions-inline">
                       <button type="button" className="button ghost" onClick={() => setFeaturedMatchId(match.id)}>
                         {isHero ? 'Στο hero' : 'Ορισμός στο hero'}
+                      </button>
+                      <button
+                        type="button"
+                        className="button ghost"
+                        onClick={() => updateArrayItem('upcomingMatches', index, 'hidden', !match.hidden)}
+                      >
+                        {match.hidden ? 'Ενεργοποίηση' : 'Προσωρινή απενεργοποίηση'}
                       </button>
                       <button type="button" className="button ghost" onClick={() => removeArrayItem('upcomingMatches', index)}>
                         Αφαίρεση

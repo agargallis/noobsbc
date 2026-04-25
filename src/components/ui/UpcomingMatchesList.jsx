@@ -46,9 +46,11 @@ function LocationIcon() {
 }
 
 export default function UpcomingMatchesList({ matches }) {
+  const visibleMatches = matches.filter((match) => !match.hidden);
+
   return (
     <div className="upcoming-list">
-      {matches.map((match) => {
+      {visibleMatches.map((match) => {
         const homeLogo = match.home ? '/images/logo1.png' : match.opponentLogo || '/images/basketaki.png';
         const awayLogo = match.home ? match.opponentLogo || '/images/basketaki.png' : '/images/logo1.png';
         const homeName = match.home ? 'Noobs' : match.opponent;

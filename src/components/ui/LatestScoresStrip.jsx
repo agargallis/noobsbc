@@ -46,9 +46,11 @@ function LocationIcon() {
 }
 
 export default function LatestScoresStrip({ matches }) {
+  const visibleMatches = matches.filter((match) => !match.hidden);
+
   return (
     <div className="scores-strip" id="scores">
-      {matches.map((match) => {
+      {visibleMatches.map((match) => {
         const homeWon = match.homeScore > match.awayScore;
         const awayWon = match.awayScore > match.homeScore;
         const isDraw = match.homeScore === match.awayScore;

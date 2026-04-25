@@ -3988,6 +3988,24 @@ tr.is-highlighted:hover {
   background: linear-gradient(180deg, rgba(30, 25, 10, 0.96), rgba(14, 18, 24, 0.96));
 }
 
+.admin-sortable-card.is-disabled {
+  border-color: rgba(255, 255, 255, 0.05);
+  opacity: 0.62;
+}
+
+.admin-sortable-card.is-disabled .admin-sortable-title strong::after {
+  content: 'Κρυφό';
+  display: inline-flex;
+  margin-left: 10px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.68rem;
+  letter-spacing: 0;
+  vertical-align: middle;
+}
+
 .admin-select-card:hover,
 .admin-sortable-card:hover {
   transform: translateY(-2px);

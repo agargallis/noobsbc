@@ -15,8 +15,10 @@ export default function HomePage() {
   const { siteData } = useSiteData();
   const [selectedPlayer, setSelectedPlayer] = useState(null);
   const heroSponsors = [...siteData.sponsors, ...siteData.sponsors];
+  const visibleLatestMatches = siteData.latestMatches.filter((match) => !match.hidden);
+  const visibleUpcomingMatches = siteData.upcomingMatches.filter((match) => !match.hidden);
   const featuredHeroMatch =
-    siteData.upcomingMatches.find((match) => String(match.id) === String(siteData.hero.featuredMatchId)) ?? siteData.nextMatch;
+    visibleUpcomingMatches.find((match) => String(match.id) === String(siteData.hero.featuredMatchId)) ?? siteData.nextMatch;
 
   useScrollAnimation();
 
@@ -91,7 +93,7 @@ export default function HomePage() {
         <div data-animate>
           <SectionHeading eyebrow="Τελευταία αποτελέσματα" title="Τα πιο πρόσφατα τελικά μας σκορ." />
         </div>
-        <LatestScoresStrip matches={siteData.latestMatches} />
+        <LatestScoresStrip matches={visibleLatestMatches} />
       </section>
 
       <section className="section-block" id="schedule">
@@ -99,7 +101,7 @@ export default function HomePage() {
           <SectionHeading eyebrow="Πρόγραμμα αγώνων" title="Οι επόμενες αναμετρήσεις μας." />
         </div>
         <div data-animate style={{ '--anim-delay': '0.1s' }}>
-          <UpcomingMatchesList matches={siteData.upcomingMatches} />
+          <UpcomingMatchesList matches={visibleUpcomingMatches} />
         </div>
       </section>
 
