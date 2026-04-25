@@ -1,4 +1,14 @@
 {
+  "crons": [
+    {
+      "path": "/api/sync-standings",
+      "schedule": "30 21 * * *"
+    },
+    {
+      "path": "/api/sync-standings",
+      "schedule": "30 22 * * *"
+    }
+  ],
   "rewrites": [
     {
       "source": "/(.*)",
