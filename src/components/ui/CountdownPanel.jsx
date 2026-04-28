@@ -56,6 +56,11 @@ export default function CountdownPanel({ nextMatch }) {
   ];
 
   const locationUrl = resolveLocationUrl(nextMatch.mapUrl, nextMatch.venue);
+  const noobsAreHome = nextMatch.home !== false;
+  const homeLogo = noobsAreHome ? '/images/logo1.png' : nextMatch.opponentLogo || '/images/basketaki.png';
+  const awayLogo = noobsAreHome ? nextMatch.opponentLogo || '/images/basketaki.png' : '/images/logo1.png';
+  const homeName = noobsAreHome ? 'Noobs' : nextMatch.opponent;
+  const awayName = noobsAreHome ? nextMatch.opponent : 'Noobs';
 
   return (
     <article className="countdown-panel">
@@ -63,13 +68,13 @@ export default function CountdownPanel({ nextMatch }) {
         <span className="pill">ΕΠΟΜΕΝΟΣ ΑΓΩΝΑΣ</span>
         <div className="countdown-matchup">
           <span className="countdown-team-card is-home">
-            <img src="/images/logo1.png" alt="" className="countdown-team-logo" aria-hidden="true" />
-            <span className="countdown-team-name">Noobs</span>
+            <img src={homeLogo} alt="" className="countdown-team-logo" aria-hidden="true" />
+            <span className="countdown-team-name">{homeName}</span>
           </span>
           <span className="countdown-vs">VS</span>
           <span className="countdown-team-card is-away">
-            <img src={nextMatch.opponentLogo || '/images/basketaki.png'} alt="" className="countdown-team-logo" aria-hidden="true" />
-            <span className="countdown-team-name">{nextMatch.opponent}</span>
+            <img src={awayLogo} alt="" className="countdown-team-logo" aria-hidden="true" />
+            <span className="countdown-team-name">{awayName}</span>
           </span>
         </div>
         {locationUrl ? (
