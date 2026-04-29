@@ -71,6 +71,30 @@
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
 }
 
+.app-shell[data-theme='light'] {
+  --bg: #f5f7fb;
+  --bg-deep: #e9edf5;
+  --panel: rgba(255, 255, 255, 0.92);
+  --panel-strong: #ffffff;
+  --panel-soft: rgba(20, 29, 44, 0.05);
+  --stroke: rgba(47, 85, 151, 0.12);
+  --stroke-gold: rgba(61, 104, 181, 0.2);
+  --stroke-cyan: rgba(68, 119, 205, 0.12);
+  --text: #111827;
+  --muted: #374151;
+  --brand: #2f5ea8;
+  --brand-light: #163f82;
+  --brand-dim: rgba(47, 94, 168, 0.1);
+  --brand-strong: #163f82;
+  --brand-gradient: linear-gradient(135deg, #163f82 0%, #2f5ea8 40%, #5d89d8 100%);
+  --accent: #4d77c4;
+  --accent-light: #e8efff;
+  --accent-dim: rgba(77, 119, 196, 0.1);
+  --shadow: 0 24px 60px rgba(15, 23, 42, 0.12), 0 4px 18px rgba(15, 23, 42, 0.08);
+  --shadow-gold: 0 0 0 1px rgba(47, 94, 168, 0.12), 0 8px 30px rgba(47, 94, 168, 0.08);
+  --shadow-hover: 0 28px 70px rgba(15, 23, 42, 0.16), 0 0 0 1px rgba(47, 94, 168, 0.16), 0 0 30px rgba(47, 94, 168, 0.06);
+}
+
 /* Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬ */
 /* KEYFRAME ANIMATIONS                           */
 /* Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬ */
@@ -315,6 +339,12 @@ img {
   will-change: transform, opacity;
 }
 
+.site-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
 .site-header::before {
   display: none;
 }
@@ -414,6 +444,35 @@ img {
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.04);
   cursor: pointer;
+}
+
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  border: 1px solid rgba(117, 168, 255, 0.18);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text);
+  cursor: pointer;
+  transition: transform 0.2s var(--spring), border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.theme-toggle svg {
+  width: 18px;
+  height: 18px;
+}
+
+.theme-toggle:hover,
+.theme-toggle:focus-visible {
+  transform: translateY(-1px);
+  border-color: rgba(117, 168, 255, 0.3);
+  background: rgba(117, 168, 255, 0.12);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.16);
+  outline: none;
 }
 
 .nav-toggle span {
@@ -2875,11 +2934,22 @@ tr.is-highlighted:hover {
     font-size: 1rem;
   }
 
+  .site-header-actions {
+    justify-self: end;
+  }
+
   .nav-toggle {
     display: inline-flex;
     width: 42px;
     height: 42px;
     flex-shrink: 0;
+  }
+
+  .theme-toggle {
+    width: 42px;
+    min-width: 42px;
+    height: 42px;
+    padding: 0;
   }
 
   .site-nav {
@@ -2901,6 +2971,13 @@ tr.is-highlighted:hover {
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
     z-index: 40;
+  }
+
+  .app-shell[data-theme='light'] .site-nav {
+    background:
+      linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.88) 42%),
+      linear-gradient(180deg, rgba(244, 247, 252, 0.98), rgba(234, 240, 249, 0.96));
+    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.14);
   }
 
   .site-nav.is-open {
@@ -3657,6 +3734,591 @@ tr.is-highlighted:hover {
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+.app-shell[data-theme='light'] {
+  background: linear-gradient(180deg, #f8fbff 0%, #eef3fb 45%, #e6edf7 100%);
+}
+
+.app-shell[data-theme='light'] .site-header {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(47, 94, 168, 0.14);
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.1);
+}
+
+.app-shell[data-theme='light'] .site-header.is-scrolled {
+  background: rgba(255, 255, 255, 0.96);
+  border-color: rgba(47, 94, 168, 0.18);
+  box-shadow: 0 20px 48px rgba(15, 23, 42, 0.14);
+}
+
+.app-shell[data-theme='light'] .brand strong {
+  background: linear-gradient(120deg, #0f172a 0%, #163f82 55%, #2f5ea8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.app-shell[data-theme='light'] .site-nav a {
+  color: rgba(17, 24, 39, 0.76);
+}
+
+.app-shell[data-theme='light'] .site-nav a:hover,
+.app-shell[data-theme='light'] .site-nav a.active {
+  color: #163f82;
+  background: linear-gradient(180deg, rgba(47, 94, 168, 0.12), rgba(47, 94, 168, 0.05));
+  box-shadow: 0 8px 18px rgba(47, 94, 168, 0.08);
+}
+
+.app-shell[data-theme='light'] .theme-toggle {
+  border-color: rgba(47, 94, 168, 0.16);
+  background: rgba(47, 94, 168, 0.06);
+}
+
+.app-shell[data-theme='light'] .theme-toggle:hover,
+.app-shell[data-theme='light'] .theme-toggle:focus-visible {
+  border-color: rgba(47, 94, 168, 0.28);
+  background: rgba(47, 94, 168, 0.12);
+  box-shadow: 0 10px 20px rgba(47, 94, 168, 0.12);
+}
+
+.app-shell[data-theme='light'] .nav-toggle {
+  border-color: rgba(47, 94, 168, 0.16);
+  background: rgba(47, 94, 168, 0.06);
+}
+
+.app-shell[data-theme='light'] .nav-toggle span {
+  background: var(--text);
+}
+
+.app-shell[data-theme='light'] .hero-sponsor-pill img,
+.app-shell[data-theme='light'] .league-mark img,
+.app-shell[data-theme='light'] .sponsor-card img {
+  filter: brightness(0) saturate(100%);
+}
+
+.app-shell[data-theme='light'] .insta-card-body p,
+.app-shell[data-theme='light'] .news-card p {
+  color: #111827;
+}
+
+.app-shell[data-theme='light'] .pre-footer-note p {
+  color: rgba(17, 24, 39, 0.62);
+}
+
+.app-shell[data-theme='light'] .pre-footer-link {
+  color: rgba(17, 24, 39, 0.9);
+  border-bottom-color: rgba(17, 24, 39, 0.24);
+}
+
+.app-shell[data-theme='light'] .pre-footer-link:hover {
+  color: #163f82;
+  border-bottom-color: rgba(22, 63, 130, 0.48);
+}
+
+.app-shell[data-theme='light'] .brand-logo {
+  background: radial-gradient(circle at 30% 30%, rgba(47, 94, 168, 0.16), rgba(255, 255, 255, 0.9));
+  border-color: rgba(47, 94, 168, 0.18);
+  filter: drop-shadow(0 10px 18px rgba(47, 94, 168, 0.12));
+}
+
+.app-shell[data-theme='light'] .hero-copy h1,
+.app-shell[data-theme='light'] .section-heading h2,
+.app-shell[data-theme='light'] .countdown-copy h3,
+.app-shell[data-theme='light'] .hero-logo-card strong {
+  background: linear-gradient(135deg, #2f4f86 0%, #1f3f77 55%, #173563 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.app-shell[data-theme='light'] .section-heading span {
+  color: #31548f;
+}
+
+.app-shell[data-theme='light'] .section-heading span::before {
+  background: linear-gradient(90deg, rgba(49, 84, 143, 0.16), #31548f, #6a8fcb);
+}
+
+.app-shell[data-theme='light'] .hero-copy p,
+.app-shell[data-theme='light'] .legal-lead,
+.app-shell[data-theme='light'] .not-found-card p,
+.app-shell[data-theme='light'] .contact-intro,
+.app-shell[data-theme='light'] .countdown-copy p,
+.app-shell[data-theme='light'] .countdown-copy small,
+.app-shell[data-theme='light'] .score-card-top,
+.app-shell[data-theme='light'] .standings-group-title,
+.app-shell[data-theme='light'] .footer-copy,
+.app-shell[data-theme='light'] .footer-credit {
+  color: #4b5b78;
+}
+
+.app-shell[data-theme='light'] .hero-copy,
+.app-shell[data-theme='light'] .hero-side,
+.app-shell[data-theme='light'] .hero-logo-card,
+.app-shell[data-theme='light'] .countdown-panel,
+.app-shell[data-theme='light'] .standings-card,
+.app-shell[data-theme='light'] .news-card,
+.app-shell[data-theme='light'] .instagram-panel,
+.app-shell[data-theme='light'] .sponsor-card,
+.app-shell[data-theme='light'] .legal-card,
+.app-shell[data-theme='light'] .not-found-card,
+.app-shell[data-theme='light'] .cookie-banner,
+.app-shell[data-theme='light'] .score-card,
+.app-shell[data-theme='light'] .player-card,
+.app-shell[data-theme='light'] .sponsor-chip {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(246, 249, 255, 0.94));
+  border-color: rgba(63, 95, 152, 0.14);
+  box-shadow: 0 24px 58px rgba(18, 36, 79, 0.1), 0 1px 0 rgba(255, 255, 255, 0.8) inset;
+  backdrop-filter: blur(20px) saturate(1.06);
+  -webkit-backdrop-filter: blur(20px) saturate(1.06);
+}
+
+.app-shell[data-theme='light'] .hero-aside .countdown-panel {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.97), rgba(243, 247, 255, 0.95)) !important;
+  border: 1px solid rgba(63, 95, 152, 0.14) !important;
+  border-top: 1px solid rgba(63, 95, 152, 0.18) !important;
+  box-shadow:
+    0 28px 70px rgba(18, 36, 79, 0.14),
+    0 1px 0 rgba(255, 255, 255, 0.84) inset !important;
+}
+
+.app-shell[data-theme='light'] .hero-aside .countdown-copy p {
+  color: #50617f;
+}
+
+.app-shell[data-theme='light'] .hero-aside .countdown-copy small {
+  color: #637391;
+}
+
+.app-shell[data-theme='light'] .countdown-copy strong,
+.app-shell[data-theme='light'] .countdown-location-line,
+.app-shell[data-theme='light'] .score-card-top span {
+  background: rgba(67, 101, 163, 0.07);
+  border-color: rgba(67, 101, 163, 0.16);
+  color: #264b87;
+}
+
+.app-shell[data-theme='light'] .countdown-item,
+.app-shell[data-theme='light'] .hero-aside .countdown-item {
+  background: rgba(67, 101, 163, 0.06) !important;
+  border-color: rgba(67, 101, 163, 0.14) !important;
+}
+
+.app-shell[data-theme='light'] .countdown-item:hover {
+  background: rgba(67, 101, 163, 0.1) !important;
+}
+
+.app-shell[data-theme='light'] .countdown-item span,
+.app-shell[data-theme='light'] .countdown-live,
+.app-shell[data-theme='light'] .countdown-location-icon,
+.app-shell[data-theme='light'] .upcoming-vs-badge,
+.app-shell[data-theme='light'] .countdown-vs {
+  color: #23447b;
+}
+
+.app-shell[data-theme='light'] .countdown-live,
+.app-shell[data-theme='light'] .hero-aside .countdown-live,
+.app-shell[data-theme='light'] .upcoming-vs-badge,
+.app-shell[data-theme='light'] .countdown-vs {
+  background: rgba(67, 101, 163, 0.08) !important;
+  border-color: rgba(67, 101, 163, 0.18) !important;
+  box-shadow: 0 10px 24px rgba(67, 101, 163, 0.08);
+}
+
+.app-shell[data-theme='light'] .countdown-team-name,
+.app-shell[data-theme='light'] .upcoming-team-name,
+.app-shell[data-theme='light'] .score-team.is-draw {
+  color: #172b4d;
+}
+
+.app-shell[data-theme='light'] .countdown-team-card::before,
+.app-shell[data-theme='light'] .upcoming-team-card::before,
+.app-shell[data-theme='light'] .score-team::before {
+  background: radial-gradient(circle, rgba(67, 101, 163, 0.12), transparent 68%);
+}
+
+.app-shell[data-theme='light'] .countdown-team-logo,
+.app-shell[data-theme='light'] .upcoming-team-logo,
+.app-shell[data-theme='light'] .score-team .match-team-logo,
+.app-shell[data-theme='light'] .hero-zoom-logo {
+  filter: drop-shadow(0 12px 24px rgba(18, 36, 79, 0.14));
+}
+
+.app-shell[data-theme='light'] .button,
+.app-shell[data-theme='light'] button.button {
+  background: linear-gradient(135deg, #d7e6ff 0%, #9fc1ff 52%, #6d9fff 100%);
+  color: #11243f;
+  box-shadow: 0 14px 30px rgba(63, 95, 152, 0.18), 0 4px 10px rgba(63, 95, 152, 0.12);
+}
+
+.app-shell[data-theme='light'] .button:hover,
+.app-shell[data-theme='light'] button.button:hover {
+  box-shadow: 0 18px 36px rgba(63, 95, 152, 0.22), 0 6px 12px rgba(63, 95, 152, 0.14);
+}
+
+.app-shell[data-theme='light'] .button.ghost,
+.app-shell[data-theme='light'] button.button.ghost {
+  background: rgba(67, 101, 163, 0.07);
+  color: #214176;
+  border: 1px solid rgba(67, 101, 163, 0.16);
+}
+
+.app-shell[data-theme='light'] .button.ghost:hover,
+.app-shell[data-theme='light'] button.button.ghost:hover {
+  background: rgba(67, 101, 163, 0.12);
+  border-color: rgba(67, 101, 163, 0.24);
+  box-shadow: 0 12px 24px rgba(63, 95, 152, 0.1);
+}
+
+.app-shell[data-theme='light'] .league-mark {
+  background: rgba(255, 255, 255, 0.82);
+  border-color: rgba(63, 95, 152, 0.14);
+  box-shadow: 0 14px 28px rgba(18, 36, 79, 0.08);
+}
+
+.app-shell[data-theme='light'] .scores-strip .score-card {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.97), rgba(242, 247, 255, 0.95)),
+    #ffffff;
+  border-color: rgba(63, 95, 152, 0.14);
+  box-shadow: 0 24px 52px rgba(18, 36, 79, 0.12);
+}
+
+.app-shell[data-theme='light'] .score-card::after {
+  background: radial-gradient(circle, rgba(63, 95, 152, 0.08), transparent 72%);
+}
+
+.app-shell[data-theme='light'] .score-card:hover {
+  border-color: rgba(63, 95, 152, 0.24);
+  box-shadow: 0 28px 58px rgba(18, 36, 79, 0.14);
+}
+
+.app-shell[data-theme='light'] .score-result-sep {
+  color: rgba(23, 43, 77, 0.46);
+}
+
+.app-shell[data-theme='light'] .score-team-name,
+.app-shell[data-theme='light'] .score-location-line,
+.app-shell[data-theme='light'] .score-location-line span {
+  color: #203658;
+}
+
+.app-shell[data-theme='light'] .match-team-logo,
+.app-shell[data-theme='light'] .standings-team-logo {
+  background: rgba(67, 101, 163, 0.06);
+  border-color: rgba(67, 101, 163, 0.12);
+}
+
+.app-shell[data-theme='light'] .standings-card {
+  overflow: hidden;
+}
+
+.app-shell[data-theme='light'] .standings-group-title {
+  color: #1f3d70;
+  border-bottom-color: rgba(63, 95, 152, 0.12);
+  background: linear-gradient(180deg, rgba(67, 101, 163, 0.05), rgba(67, 101, 163, 0.02));
+}
+
+.app-shell[data-theme='light'] .standings-table th,
+.app-shell[data-theme='light'] .standings-table td,
+.app-shell[data-theme='light'] th,
+.app-shell[data-theme='light'] td {
+  border-bottom-color: rgba(63, 95, 152, 0.08);
+}
+
+.app-shell[data-theme='light'] .standings-table th,
+.app-shell[data-theme='light'] th {
+  color: #5b6f92;
+}
+
+.app-shell[data-theme='light'] .standings-table td,
+.app-shell[data-theme='light'] .standings-team-name {
+  color: #1a2f53;
+}
+
+.app-shell[data-theme='light'] tbody tr:hover {
+  background: rgba(67, 101, 163, 0.05);
+}
+
+.app-shell[data-theme='light'] tr.is-highlighted {
+  background: rgba(67, 101, 163, 0.1);
+}
+
+.app-shell[data-theme='light'] tr.is-highlighted td {
+  color: #1a2f53;
+}
+
+.app-shell[data-theme='light'] .standings-table tbody tr.is-highlighted .standings-team-name {
+  color: #163f82;
+}
+
+.app-shell[data-theme='light'] .standings-rank-badge {
+  border-color: #4f78ba;
+  color: #28497f;
+  background: rgba(79, 120, 186, 0.06);
+}
+
+.app-shell[data-theme='light'] .standings-table tbody tr:nth-child(n + 7) .standings-rank-badge {
+  border-color: #d89034;
+  color: #8a4d04;
+  background: rgba(216, 144, 52, 0.08);
+}
+
+.app-shell[data-theme='light'] .standings-table tbody tr.is-highlighted .standings-rank-badge {
+  border-color: #d1a129;
+  color: #7b5904;
+  background: rgba(209, 161, 41, 0.08);
+}
+
+.app-shell[data-theme='light'] .instagram-panel,
+.app-shell[data-theme='light'] .insta-card {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(244, 248, 255, 0.95));
+  border-color: rgba(63, 95, 152, 0.14);
+}
+
+.app-shell[data-theme='light'] .insta-card:hover,
+.app-shell[data-theme='light'] .insta-card:focus-visible {
+  box-shadow: 0 18px 34px rgba(18, 36, 79, 0.12);
+}
+
+.app-shell[data-theme='light'] .insta-card-img-overlay {
+  background: linear-gradient(to top, rgba(67, 101, 163, 0.2) 0%, transparent 58%);
+}
+
+.app-shell[data-theme='light'] .sponsor-chip span,
+.app-shell[data-theme='light'] .sponsor-card span,
+.app-shell[data-theme='light'] .news-card span {
+  color: #4365a3;
+}
+
+.app-shell[data-theme='light'] .sponsor-card h3,
+.app-shell[data-theme='light'] .instagram-panel h2,
+.app-shell[data-theme='light'] .news-card h3 {
+  color: #1d3762;
+}
+
+.app-shell[data-theme='light'] .sponsor-card::before {
+  background: linear-gradient(145deg, rgba(67, 101, 163, 0.06) 0%, transparent 50%);
+}
+
+.app-shell[data-theme='light'] .sponsor-card:hover {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.99), rgba(239, 245, 255, 0.96));
+}
+
+.app-shell[data-theme='light'] .footer-grid {
+  background: linear-gradient(180deg, rgba(231, 238, 250, 0.98), rgba(217, 227, 243, 0.98));
+  border-color: rgba(63, 95, 152, 0.16);
+  box-shadow: 0 18px 36px rgba(18, 36, 79, 0.1);
+}
+
+.app-shell[data-theme='light'] .footer-grid::before {
+  background: linear-gradient(90deg, transparent, rgba(63, 95, 152, 0.22) 40%, rgba(106, 143, 203, 0.18) 60%, transparent);
+}
+
+.app-shell[data-theme='light'] .footer-legal-icon {
+  border-color: rgba(63, 95, 152, 0.16);
+  background: rgba(255, 255, 255, 0.55);
+  color: #3d5788;
+}
+
+.app-shell[data-theme='light'] .footer-legal-icon:hover,
+.app-shell[data-theme='light'] .footer-legal-icon.active {
+  color: #163f82;
+  border-color: rgba(63, 95, 152, 0.28);
+  background: rgba(214, 227, 255, 0.9);
+}
+
+.app-shell[data-theme='light'] .site-footer a,
+.app-shell[data-theme='light'] .footer-ubd,
+.app-shell[data-theme='light'] .site-footer .footer-ubd {
+  color: #22457e !important;
+}
+
+.app-shell[data-theme='light'] .site-footer a:hover,
+.app-shell[data-theme='light'] .footer-ubd:hover,
+.app-shell[data-theme='light'] .site-footer .footer-ubd:hover {
+  color: #16386c !important;
+}
+
+.app-shell[data-theme='light'] .hero-buttons .button {
+  border-color: rgba(73, 105, 160, 0.16);
+  box-shadow: 0 16px 28px rgba(40, 68, 116, 0.12), 0 1px 0 rgba(255, 255, 255, 0.85) inset;
+}
+
+.app-shell[data-theme='light'] .hero-buttons .button:not(.ghost) {
+  background: linear-gradient(180deg, #eef5ff 0%, #d5e6ff 48%, #b9d4ff 100%);
+  color: #13294a;
+  text-shadow: none;
+}
+
+.app-shell[data-theme='light'] .hero-buttons .button:not(.ghost):hover {
+  transform: translateY(-3px) scale(1.02);
+  background: linear-gradient(180deg, #f7fbff 0%, #deebff 48%, #c4dbff 100%);
+  box-shadow: 0 18px 34px rgba(40, 68, 116, 0.16), 0 1px 0 rgba(255, 255, 255, 0.9) inset;
+}
+
+.app-shell[data-theme='light'] .hero-buttons .button.ghost {
+  background: rgba(255, 255, 255, 0.74);
+  border-color: rgba(73, 105, 160, 0.16);
+  color: #2a4778;
+  box-shadow: 0 12px 24px rgba(40, 68, 116, 0.08), 0 1px 0 rgba(255, 255, 255, 0.82) inset;
+}
+
+.app-shell[data-theme='light'] .hero-buttons .button.ghost:hover {
+  background: rgba(239, 246, 255, 0.94);
+  color: #17396d;
+  border-color: rgba(73, 105, 160, 0.24);
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 16px 30px rgba(40, 68, 116, 0.12), 0 1px 0 rgba(255, 255, 255, 0.9) inset;
+}
+
+.app-shell[data-theme='light'] .countdown-copy .pill {
+  background: linear-gradient(180deg, rgba(222, 245, 240, 0.96), rgba(194, 232, 224, 0.9));
+  border-color: rgba(46, 125, 111, 0.2);
+  color: #145f54;
+  box-shadow: 0 10px 20px rgba(46, 125, 111, 0.1), 0 1px 0 rgba(255, 255, 255, 0.84) inset;
+}
+
+.app-shell[data-theme='light'] .upcoming-item {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.97), rgba(242, 247, 255, 0.95)),
+    #ffffff;
+  border-color: rgba(63, 95, 152, 0.14);
+  box-shadow: 0 24px 52px rgba(18, 36, 79, 0.12);
+}
+
+.app-shell[data-theme='light'] .upcoming-item::before {
+  background: linear-gradient(180deg, rgba(63, 95, 152, 0.14), rgba(63, 95, 152, 0.48), rgba(63, 95, 152, 0.14));
+}
+
+.app-shell[data-theme='light'] .upcoming-item:hover {
+  border-color: rgba(63, 95, 152, 0.24);
+  box-shadow: 0 28px 58px rgba(18, 36, 79, 0.15);
+}
+
+.app-shell[data-theme='light'] .upcoming-item-competition {
+  background: rgba(67, 101, 163, 0.08);
+  border-color: rgba(67, 101, 163, 0.16);
+  color: #2a4d87;
+}
+
+.app-shell[data-theme='light'] .upcoming-item-date strong {
+  color: #1d3357;
+}
+
+.app-shell[data-theme='light'] .upcoming-location-line {
+  background: rgba(67, 101, 163, 0.07);
+  border-color: rgba(67, 101, 163, 0.16);
+  color: #264b87;
+}
+
+.app-shell[data-theme='light'] .upcoming-location-icon {
+  color: #315a99;
+}
+
+.app-shell[data-theme='light'] .upcoming-item-badge.is-home {
+  background: rgba(38, 128, 87, 0.08);
+  border-color: rgba(38, 128, 87, 0.22);
+  color: #1d6b48;
+}
+
+.app-shell[data-theme='light'] .upcoming-item-badge.is-away {
+  background: rgba(176, 65, 82, 0.08);
+  border-color: rgba(176, 65, 82, 0.22);
+  color: #8f2f43;
+}
+
+.app-shell[data-theme='light'] .score-result-value.is-winner {
+  color: #17805a;
+  text-shadow: none;
+}
+
+.app-shell[data-theme='light'] .score-result-value.is-loser {
+  color: #b33d55;
+  text-shadow: none;
+}
+
+.app-shell[data-theme='light'] .score-team.is-winner {
+  color: #17805a;
+}
+
+.app-shell[data-theme='light'] .score-team.is-loser {
+  color: #b33d55;
+}
+
+.app-shell[data-theme='light'] .score-location-line {
+  background: rgba(67, 101, 163, 0.07);
+  border-color: rgba(67, 101, 163, 0.16);
+  color: #264b87;
+}
+
+.app-shell[data-theme='light'] .score-location-icon {
+  color: #315a99;
+}
+
+.app-shell[data-theme='light'] .player-modal-backdrop {
+  background: rgba(12, 20, 34, 0.72);
+}
+
+.app-shell[data-theme='light'] .player-modal {
+  background: #fbfdff;
+  border-color: rgba(63, 95, 152, 0.14);
+  box-shadow: 0 34px 90px rgba(12, 20, 34, 0.32), 0 1px 0 rgba(255, 255, 255, 0.82) inset;
+}
+
+.app-shell[data-theme='light'] .player-modal-content {
+  background:
+    linear-gradient(145deg, rgba(67, 101, 163, 0.05) 0%, transparent 50%),
+    #fbfdff;
+}
+
+.app-shell[data-theme='light'] .player-modal-content .pill {
+  background: linear-gradient(180deg, rgba(222, 245, 240, 0.96), rgba(194, 232, 224, 0.9));
+  border-color: rgba(46, 125, 111, 0.2);
+  color: #145f54;
+}
+
+.app-shell[data-theme='light'] .player-modal-content h3 {
+  background: linear-gradient(135deg, #2f4f86 0%, #1f3f77 55%, #173563 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.app-shell[data-theme='light'] .player-modal-content > p {
+  color: #4b5b78;
+}
+
+.app-shell[data-theme='light'] .player-modal-close {
+  background: rgba(255, 255, 255, 0.78);
+  border-color: rgba(63, 95, 152, 0.16);
+  color: #1d3357;
+  box-shadow: 0 8px 18px rgba(18, 36, 79, 0.08);
+}
+
+.app-shell[data-theme='light'] .player-modal-close:hover {
+  background: #eff5ff;
+  border-color: rgba(63, 95, 152, 0.26);
+}
+
+.app-shell[data-theme='light'] .player-details-grid div {
+  background: rgba(67, 101, 163, 0.06);
+  border-color: rgba(67, 101, 163, 0.12);
+}
+
+.app-shell[data-theme='light'] .player-details-grid div:hover {
+  background: rgba(67, 101, 163, 0.1);
+  border-color: rgba(67, 101, 163, 0.2);
+}
+
+.app-shell[data-theme='light'] .player-details-grid small {
+  color: #4b5b78;
+}
+
+.app-shell[data-theme='light'] .player-details-grid strong {
+  color: #1d3357;
 }
 
 .insta-card-meta {
