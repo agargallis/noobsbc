@@ -6516,3 +6516,12 @@ body.modal-open {
 
 
 
+/* FORCE all basketaki.png to be ORIGINAL on dark mode - no exceptions */
+img[src*="basketaki.png"] {
+  filter: none !important;
+}
+
+/* FORCE all basketaki.png to be DARK on light mode */
+.app-shell[data-theme='light'] img[src*="basketaki.png"] {
+  filter: brightness(0.3) contrast(1.1) !important;
+}
