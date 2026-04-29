@@ -35,6 +35,18 @@ const sanitizeSiteData = (value) => {
     href: normalizeInstagramUrl(post?.href)
   }));
 
+  merged.sponsors = merged.sponsors.map((sponsor) => {
+    const legacyTone = ['original', 'black', 'white'].includes(sponsor?.logoTone) ? sponsor.logoTone : null;
+    const logoToneDark = ['original', 'black', 'white'].includes(sponsor?.logoToneDark) ? sponsor.logoToneDark : legacyTone || 'white';
+    const logoToneLight = ['original', 'black', 'white'].includes(sponsor?.logoToneLight) ? sponsor.logoToneLight : legacyTone || 'black';
+
+    return {
+      ...sponsor,
+      logoToneDark,
+      logoToneLight
+    };
+  });
+
   return merged;
 };
 

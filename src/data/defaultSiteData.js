@@ -39,21 +39,27 @@ const sponsorLinks = [
     name: 'Logitel',
     label: 'Επίσημος χορηγός',
     image: '/images/sponsor1.png',
-    url: 'https://logitel.gr'
+    url: 'https://logitel.gr',
+    logoToneDark: 'white',
+    logoToneLight: 'black'
   },
   {
     id: 'aspro-provato',
     name: 'Άσπρο Πρόβατο',
     label: 'Χορηγός εξοπλισμού',
     image: '/images/sponsor2.png',
-    url: 'https://aspro-provato.gr'
+    url: 'https://aspro-provato.gr',
+    logoToneDark: 'white',
+    logoToneLight: 'black'
   },
   {
     id: 'ubd',
     name: 'UBD',
     label: 'Κατασκευή του site',
     image: '/images/sponsor3.png',
-    url: 'https://ubd.gr'
+    url: 'https://ubd.gr',
+    logoToneDark: 'white',
+    logoToneLight: 'black'
   }
 ];
 

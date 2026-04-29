@@ -1521,6 +1521,39 @@ button.button.small {
   filter: brightness(1.05) saturate(1);
 }
 
+.hero-sponsor-pill[data-logo-tone-dark='black'] img,
+.sponsor-card[data-logo-tone-dark='black'] img,
+.admin-preview-sponsors .sponsor-card[data-logo-tone='black'] img {
+  filter: brightness(0) saturate(100%);
+}
+
+.hero-sponsor-pill[data-logo-tone-dark='white'] img,
+.sponsor-card[data-logo-tone-dark='white'] img,
+.admin-preview-sponsors .sponsor-card[data-logo-tone='white'] img {
+  filter: brightness(0) invert(1);
+}
+
+.hero-sponsor-pill[data-logo-tone-dark='original'] img,
+.sponsor-card[data-logo-tone-dark='original'] img,
+.admin-preview-sponsors .sponsor-card[data-logo-tone='original'] img {
+  filter: brightness(0.95) saturate(1);
+}
+
+.sponsor-card[data-logo-tone-dark='black']:hover img,
+.admin-preview-sponsors .sponsor-card[data-logo-tone='black']:hover img {
+  filter: brightness(0) saturate(100%);
+}
+
+.sponsor-card[data-logo-tone-dark='white']:hover img,
+.admin-preview-sponsors .sponsor-card[data-logo-tone='white']:hover img {
+  filter: brightness(0) invert(1);
+}
+
+.sponsor-card[data-logo-tone-dark='original']:hover img,
+.admin-preview-sponsors .sponsor-card[data-logo-tone='original']:hover img {
+  filter: brightness(1.05) saturate(1);
+}
+
 /* Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬ */
 /* SECTION BLOCKS                                */
 /* Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬Ξ²β€β‚¬ */
@@ -3791,10 +3824,20 @@ tr.is-highlighted:hover {
   background: var(--text);
 }
 
-.app-shell[data-theme='light'] .hero-sponsor-pill img,
 .app-shell[data-theme='light'] .league-mark img,
-.app-shell[data-theme='light'] .sponsor-card img {
+.app-shell[data-theme='light'] .hero-sponsor-pill[data-logo-tone-light='black'] img,
+.app-shell[data-theme='light'] .sponsor-card[data-logo-tone-light='black'] img {
   filter: brightness(0) saturate(100%);
+}
+
+.app-shell[data-theme='light'] .hero-sponsor-pill[data-logo-tone-light='white'] img,
+.app-shell[data-theme='light'] .sponsor-card[data-logo-tone-light='white'] img {
+  filter: brightness(0) invert(1);
+}
+
+.app-shell[data-theme='light'] .hero-sponsor-pill[data-logo-tone-light='original'] img,
+.app-shell[data-theme='light'] .sponsor-card[data-logo-tone-light='original'] img {
+  filter: brightness(1) saturate(1);
 }
 
 .app-shell[data-theme='light'] .insta-card-body p,
@@ -3833,11 +3876,17 @@ tr.is-highlighted:hover {
 }
 
 .app-shell[data-theme='light'] .section-heading span {
-  color: #31548f;
+  color: #9a6a12;
+  background: linear-gradient(135deg, #7a4f08 0%, #c89225 38%, #ffe28a 58%, #a86f0f 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 2px 5px rgba(168, 111, 15, 0.16));
 }
 
 .app-shell[data-theme='light'] .section-heading span::before {
-  background: linear-gradient(90deg, rgba(49, 84, 143, 0.16), #31548f, #6a8fcb);
+  background: linear-gradient(90deg, rgba(168, 111, 15, 0.16), #c89225, #ffe28a);
+  box-shadow: 0 0 12px rgba(200, 146, 37, 0.24);
 }
 
 .app-shell[data-theme='light'] .hero-copy p,
@@ -4012,7 +4061,10 @@ tr.is-highlighted:hover {
 }
 
 .app-shell[data-theme='light'] .standings-card {
-  overflow: hidden;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-gutter: stable;
 }
 
 .app-shell[data-theme='light'] .standings-group-title {
@@ -4970,6 +5022,38 @@ tr.is-highlighted:hover {
 
 .admin-preview-sponsors {
   grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.admin-preview-sponsors.is-light {
+  padding: 18px;
+  border-radius: 24px;
+  background: linear-gradient(180deg, #f8fbff, #e9f0fb);
+}
+
+.admin-preview-sponsors.is-light .sponsor-card {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(246, 249, 255, 0.94));
+  border-color: rgba(63, 95, 152, 0.14);
+  box-shadow: 0 18px 38px rgba(18, 36, 79, 0.12);
+}
+
+.admin-preview-sponsors.is-light .sponsor-card span {
+  color: #4365a3;
+}
+
+.admin-preview-sponsors.is-light .sponsor-card h3 {
+  color: #1d3762;
+}
+
+.admin-preview-sponsors.is-dark {
+  padding: 18px;
+  border-radius: 24px;
+  background: linear-gradient(180deg, rgba(11, 17, 24, 0.98), rgba(6, 10, 16, 0.96));
+}
+
+.admin-mini-button {
+  min-height: 38px;
+  padding-inline: 14px;
+  font-size: 0.78rem;
 }
 
 @media (max-width: 1200px) {
@@ -6014,6 +6098,42 @@ body.modal-open {
 .admin-live-editor .admin-grid textarea,
 .admin-live-editor .admin-grid select {
   background: rgba(255, 255, 255, 0.04);
+}
+
+.admin-live-editor .admin-grid.compact label.admin-logo-tone-label {
+  color: #f3f7ff;
+  font-weight: 800;
+}
+
+.admin-live-editor .admin-grid.compact select.admin-logo-tone-select {
+  background:
+    linear-gradient(180deg, rgba(31, 42, 58, 0.98), rgba(15, 22, 33, 0.98));
+  border-color: rgba(148, 188, 255, 0.32);
+  color: #ffffff;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  box-shadow:
+    0 12px 24px rgba(0, 0, 0, 0.26),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.admin-live-editor .admin-grid.compact select.admin-logo-tone-select:hover {
+  background:
+    linear-gradient(180deg, rgba(39, 52, 70, 0.98), rgba(19, 28, 42, 0.98));
+  border-color: rgba(148, 188, 255, 0.48);
+}
+
+.admin-live-editor .admin-grid.compact select.admin-logo-tone-select:focus {
+  outline: none;
+  border-color: rgba(126, 182, 255, 0.76);
+  box-shadow:
+    0 0 0 3px rgba(74, 144, 255, 0.2),
+    0 14px 28px rgba(0, 0, 0, 0.3);
+}
+
+.admin-live-editor .admin-grid.compact select.admin-logo-tone-select option {
+  background: #111923;
+  color: #ffffff;
 }
 
 .admin-live-preview .roster-carousel {

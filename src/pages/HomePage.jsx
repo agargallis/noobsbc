@@ -44,6 +44,8 @@ export default function HomePage() {
                       href="https://www.basketaki.com"
                       target="_blank"
                       rel="noreferrer"
+                      data-logo-tone-dark="black"
+                      data-logo-tone-light="black"
                     >
                       <img src="/images/basketaki.png" alt="Basketaki The League" />
                     </a>
@@ -56,6 +58,8 @@ export default function HomePage() {
                         rel="noreferrer"
                         aria-hidden={index >= siteData.sponsors.length}
                         tabIndex={index >= siteData.sponsors.length ? -1 : undefined}
+                        data-logo-tone-dark={sponsor.logoToneDark || sponsor.logoTone || 'white'}
+                        data-logo-tone-light={sponsor.logoToneLight || sponsor.logoTone || 'black'}
                       >
                         <img src={sponsor.image} alt={sponsor.name} />
                       </a>
@@ -149,6 +153,8 @@ export default function HomePage() {
               target="_blank"
               rel="noreferrer"
               data-animate
+              data-logo-tone-dark={sponsor.logoToneDark || sponsor.logoTone || 'white'}
+              data-logo-tone-light={sponsor.logoToneLight || sponsor.logoTone || 'black'}
               style={{ '--anim-delay': `${index * 0.1}s` }}
             >
               <span>{sponsor.label}</span>

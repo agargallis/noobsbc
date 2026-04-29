@@ -81,7 +81,9 @@ const emptySponsor = () => ({
   name: '',
   label: '',
   image: '/images/logo1.png',
-  url: ''
+  url: '',
+  logoToneDark: 'original',
+  logoToneLight: 'original'
 });
 
 const fieldNumber = (value) => Number(value || 0);
@@ -143,6 +145,7 @@ export default function AdminPage() {
   const [hasPendingChanges, setHasPendingChanges] = useState(false);
   const [lastSavedAt, setLastSavedAt] = useState(null);
   const [dragState, setDragState] = useState(null);
+  const [sponsorPreviewTheme, setSponsorPreviewTheme] = useState('dark');
 
   const hydrateRef = useRef(true);
   const autoSaveTimerRef = useRef(null);
@@ -1043,9 +1046,15 @@ export default function AdminPage() {
           title="Χορηγοί"
           description="Άλλαξε σειρά, ονόματα, labels, λογότυπα και links. Το hero marquee και η sponsor section τραβούν από το ίδιο data source."
           preview={
-            <div className="sponsor-grid admin-preview-sponsors">
+            <div className={`sponsor-grid admin-preview-sponsors is-${sponsorPreviewTheme}`}>
               {draft.sponsors.map((sponsor) => (
-                <article key={sponsor.id} className="sponsor-card">
+                <article
+                  key={sponsor.id}
+                  className="sponsor-card"
+                  data-logo-tone={sponsorPreviewTheme === 'light'
+                    ? sponsor.logoToneLight || sponsor.logoTone || 'black'
+                    : sponsor.logoToneDark || sponsor.logoTone || 'white'}
+                >
                   <span>{sponsor.label}</span>
                   <img src={sponsor.image} alt={sponsor.name} />
                   <h3>{sponsor.name}</h3>
@@ -1054,9 +1063,18 @@ export default function AdminPage() {
             </div>
           }
           actions={
-            <button type="button" className="button" onClick={() => addArrayItem('sponsors', emptySponsor)}>
-              Προσθήκη χορηγού
-            </button>
+            <>
+              <button
+                type="button"
+                className="button ghost admin-mini-button"
+                onClick={() => setSponsorPreviewTheme((current) => (current === 'light' ? 'dark' : 'light'))}
+              >
+                {sponsorPreviewTheme === 'light' ? 'Dark logos' : 'Light logos'}
+              </button>
+              <button type="button" className="button" onClick={() => addArrayItem('sponsors', emptySponsor)}>
+                Προσθήκη χορηγού
+              </button>
+            </>
           }
         >
           <div className="admin-sortable-list">
@@ -1094,6 +1112,30 @@ export default function AdminPage() {
                   <label>
                     Link προορισμού
                     <input value={sponsor.url} onChange={(event) => updateArrayItem('sponsors', index, 'url', event.target.value)} />
+                  </label>
+                  <label className="admin-logo-tone-label">
+                    Χρώμα σε dark theme
+                    <select
+                      className="admin-logo-tone-select"
+                      value={sponsor.logoToneDark || sponsor.logoTone || 'white'}
+                      onChange={(event) => updateArrayItem('sponsors', index, 'logoToneDark', event.target.value)}
+                    >
+                      <option value="original">Όπως ανέβηκε</option>
+                      <option value="black">Μαύρο</option>
+                      <option value="white">Λευκό</option>
+                    </select>
+                  </label>
+                  <label className="admin-logo-tone-label">
+                    Χρώμα σε light theme
+                    <select
+                      className="admin-logo-tone-select"
+                      value={sponsor.logoToneLight || sponsor.logoTone || 'black'}
+                      onChange={(event) => updateArrayItem('sponsors', index, 'logoToneLight', event.target.value)}
+                    >
+                      <option value="original">Όπως ανέβηκε</option>
+                      <option value="black">Μαύρο</option>
+                      <option value="white">Λευκό</option>
+                    </select>
                   </label>
                 </div>
               </article>
