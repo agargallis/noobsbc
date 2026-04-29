@@ -6525,3 +6525,182 @@ img[src*="basketaki.png"] {
 .app-shell[data-theme='light'] img[src*="basketaki.png"] {
   filter: brightness(0.3) contrast(1.1) !important;
 }
+
+
+
+
+
+
+/* ============================================
+   LIGHT THEME COOKIE BANNER – MAX CONTRAST
+   ============================================ */
+.app-shell[data-theme='light'] .cookie-banner,
+.app-shell[data-theme='light'] .cookie-banner *:not(svg) {
+  color: #000000 !important;
+}
+
+.app-shell[data-theme='light'] .cookie-banner {
+  background: #ffffff !important;
+  border: 1px solid #9ca3af !important;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Cookie policy link – no underline ever on light theme */
+.app-shell[data-theme='light'] .cookie-banner a,
+.app-shell[data-theme='light'] .cookie-banner a:hover,
+.app-shell[data-theme='light'] .cookie-banner a:focus,
+.app-shell[data-theme='light'] .cookie-banner a:active,
+.app-shell[data-theme='light'] .cookie-banner a:visited {
+  text-decoration: none !important;
+}
+
+.app-shell[data-theme='light'] .cookie-banner .button:not(.ghost) {
+  background-color: #1d4ed8 !important;
+  color: #000000 !important;
+  border: none !important;
+}
+
+.app-shell[data-theme='light'] .cookie-banner .button:not(.ghost):hover {
+  background-color: #1e3a8a !important;
+}
+
+.app-shell[data-theme='light'] .cookie-banner .button.ghost {
+  background-color: transparent !important;
+  border: 2px solid #374151 !important;
+  color: #000000 !important;
+}
+
+.app-shell[data-theme='light'] .cookie-banner .button.ghost:hover {
+  background-color: #f3f4f6 !important;
+}
+
+.app-shell[data-theme='light'] .cookie-banner svg ellipse {
+  fill: #ea580c !important;
+  opacity: 1 !important;
+}
+
+
+/* ============================================
+   LIGHT THEME – LEGAL PAGES (privacy, terms, cookies)
+   ONLY text contrast + divider lines (no boxes)
+   ============================================ */
+
+/* Force all text to high contrast on light theme */
+.app-shell[data-theme='light'] .legal-page,
+.app-shell[data-theme='light'] .legal-page *:not(svg):not(img) {
+  color: #111827 !important;
+}
+
+/* Headings – pure black for extra contrast */
+.app-shell[data-theme='light'] .legal-page h1,
+.app-shell[data-theme='light'] .legal-page h2,
+.app-shell[data-theme='light'] .legal-page h3,
+.app-shell[data-theme='light'] .legal-page strong {
+  color: #000000 !important;
+}
+
+/* Links – blue with underline (clear and accessible) */
+.app-shell[data-theme='light'] .legal-page a {
+  color: #2563eb !important;
+  text-decoration: underline !important;
+  text-underline-offset: 2px !important;
+}
+
+.app-shell[data-theme='light'] .legal-page a:hover,
+.app-shell[data-theme='light'] .legal-page a:focus {
+  color: #1d4ed8 !important;
+}
+
+/* Divider lines (horizontal rules) – visible grey */
+.app-shell[data-theme='light'] .legal-page hr {
+  border: none !important;
+  height: 1px !important;
+  background-color: #9ca3af !important;
+  margin: 24px 0 !important;
+}
+
+/* Optional: subtle dividers between sections (if you use border-bottom on certain elements) */
+.app-shell[data-theme='light'] .legal-page .legal-card,
+.app-shell[data-theme='light'] .legal-page section + section {
+  border-top: 1px solid #d1d5db !important;
+}
+
+/* Lists – keep consistent contrast */
+.app-shell[data-theme='light'] .legal-page ul,
+.app-shell[data-theme='light'] .legal-page ol {
+  color: #111827 !important;
+}
+
+.app-shell[data-theme='light'] .legal-page li {
+  color: #1f2937 !important;
+}
+
+/* Muted/secondary text – still readable */
+.app-shell[data-theme='light'] .legal-page .muted,
+.app-shell[data-theme='light'] .legal-page small,
+.app-shell[data-theme='light'] .legal-page .text-muted {
+  color: #374151 !important;
+}
+
+
+
+
+/* ============================================
+   LIGHT THEME – LEGAL PAGES: NO BOXES, BUT VISIBLE DIVIDER LINES
+   Exactly like dark mode, only text contrast + visible dividers
+   ============================================ */
+
+/* Remove backgrounds, borders (except top border for dividers), shadows */
+.app-shell[data-theme='light'] .legal-card,
+.app-shell[data-theme='light'] .legal-sections > div,
+.app-shell[data-theme='light'] .legal-page .legal-card,
+.app-shell[data-theme='light'] .not-found-card {
+  background: transparent !important;
+  border: none !important;
+  border-top: 1px solid #9ca3af !important;  /* visible gray divider line */
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+}
+
+/* Remove border-top from the first card to avoid double line at top */
+.app-shell[data-theme='light'] .legal-card:first-of-type,
+.app-shell[data-theme='light'] .legal-sections > div:first-child {
+  border-top: none !important;
+}
+
+/* Keep text contrast high */
+.app-shell[data-theme='light'] .legal-page,
+.app-shell[data-theme='light'] .legal-page *:not(svg):not(img) {
+  color: #111827 !important;
+}
+
+/* Headings – pure black */
+.app-shell[data-theme='light'] .legal-page h1,
+.app-shell[data-theme='light'] .legal-page h2,
+.app-shell[data-theme='light'] .legal-page h3,
+.app-shell[data-theme='light'] .legal-page strong {
+  color: #000000 !important;
+}
+
+/* Links – blue with underline */
+.app-shell[data-theme='light'] .legal-page a {
+  color: #2563eb !important;
+  text-decoration: underline !important;
+}
+
+.app-shell[data-theme='light'] .legal-page a:hover {
+  color: #1d4ed8 !important;
+}
+
+/* Horizontal <hr> elements – visible gray */
+.app-shell[data-theme='light'] .legal-page hr {
+  border: none !important;
+  height: 1px !important;
+  background-color: #9ca3af !important;
+}
+
+/* Muted text – readable gray */
+.app-shell[data-theme='light'] .legal-page .muted,
+.app-shell[data-theme='light'] .legal-page small {
+  color: #374151 !important;
+}
