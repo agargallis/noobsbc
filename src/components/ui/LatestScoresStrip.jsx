@@ -45,23 +45,7 @@ function LocationIcon() {
   );
 }
 
-function YoutubeIcon() {
-  return (
-    <svg
-      className="score-youtube-icon"
-      xmlns="http://www.w3.org/2000/svg"
-      width="18"
-      height="18"
-      viewBox="0 0 24 24"
-      fill="currentColor"
-      aria-hidden="true"
-    >
-      <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.6 3.5 12 3.5 12 3.5s-7.6 0-9.4.6A3 3 0 0 0 .5 6.2 31.2 31.2 0 0 0 0 12a31.2 31.2 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.8.6 9.4.6 9.4.6s7.6 0 9.4-.6a3 3 0 0 0 2.1-2.1A31.2 31.2 0 0 0 24 12a31.2 31.2 0 0 0-.5-5.8ZM9.6 15.6V8.4l6.2 3.6-6.2 3.6Z" />
-    </svg>
-  );
-}
-
-function getYoutubeThumbnail(url) {
+function getYoutubeEmbedUrl(url) {
   if (!url) {
     return '';
   }
@@ -78,7 +62,7 @@ function getYoutubeThumbnail(url) {
       videoId = parsed.searchParams.get('v') || '';
     }
 
-    return videoId ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` : '';
+    return videoId ? `https://www.youtube.com/embed/${videoId}` : '';
   } catch {
     return '';
   }
@@ -101,7 +85,7 @@ export default function LatestScoresStrip({ matches }) {
         const homeStateClass = isDraw ? 'is-draw' : homeWon ? 'is-winner' : 'is-loser';
         const awayStateClass = isDraw ? 'is-draw' : awayWon ? 'is-winner' : 'is-loser';
         const locationUrl = resolveLocationUrl(match.mapUrl, match.venue);
-        const youtubeThumbnail = getYoutubeThumbnail(match.youtubeUrl);
+        const youtubeEmbedUrl = getYoutubeEmbedUrl(match.youtubeUrl);
 
         return (
           <div key={match.id} className="score-item-stack">
@@ -151,19 +135,19 @@ export default function LatestScoresStrip({ matches }) {
               )}
             </article>
 
-            {match.youtubeUrl ? (
-              <a className="score-youtube-preview" href={match.youtubeUrl} target="_blank" rel="noreferrer">
+            {youtubeEmbedUrl ? (
+              <div className="score-youtube-preview">
                 <div className="score-youtube-thumb-wrap">
-                  {youtubeThumbnail ? (
-                    <img className="score-youtube-thumb" src={youtubeThumbnail} alt={`YouTube thumbnail για ${match.home} - ${match.away}`} />
-                  ) : (
-                    <div className="score-youtube-thumb score-youtube-thumb-fallback" aria-hidden="true" />
-                  )}
-                  <span className="score-youtube-play">
-                    <YoutubeIcon />
-                  </span>
+                  <iframe
+                    className="score-youtube-embed"
+                    src={youtubeEmbedUrl}
+                    title={`YouTube video για ${match.home} - ${match.away}`}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                    referrerPolicy="strict-origin-when-cross-origin"
+                  />
                 </div>
-              </a>
+              </div>
             ) : null}
           </div>
         );
