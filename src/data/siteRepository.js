@@ -3,6 +3,18 @@ import { isSupabaseConfigured, SITE_CONTENT_SLUG, SITE_CONTENT_TABLE, supabase }
 
 const STORAGE_KEY = 'noobs-site-data-v3';
 const INSTAGRAM_CANONICAL_URL = 'https://instagram.com/noobs.gr';
+const MINOES_YOUTUBE_URL = 'https://www.youtube.com/live/GVsjWC-fXMc?si=tdlyhYxw4BJ3xayp';
+
+const withLatestMatchYoutubeDefaults = (match) => {
+  const home = typeof match?.home === 'string' ? match.home.toLowerCase() : '';
+  const away = typeof match?.away === 'string' ? match.away.toLowerCase() : '';
+  const isMinoesMatch = home.includes('μίνωες') || away.includes('μίνωες');
+
+  return {
+    ...match,
+    youtubeUrl: match?.youtubeUrl || (isMinoesMatch ? MINOES_YOUTUBE_URL : '')
+  };
+};
 
 const normalizeInstagramUrl = (value) => {
   if (!value || typeof value !== 'string') {
@@ -34,6 +46,8 @@ const sanitizeSiteData = (value) => {
     ...post,
     href: normalizeInstagramUrl(post?.href)
   }));
+
+  merged.latestMatches = merged.latestMatches.map(withLatestMatchYoutubeDefaults);
 
   merged.sponsors = merged.sponsors.map((sponsor) => {
     const legacyTone = ['original', 'black', 'white'].includes(sponsor?.logoTone) ? sponsor.logoTone : null;

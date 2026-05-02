@@ -41,6 +41,7 @@ const emptyLatestMatch = () => ({
   awayScore: 0,
   venue: '',
   mapUrl: '',
+  youtubeUrl: '',
   hidden: false
 });
 
@@ -819,6 +820,10 @@ export default function AdminPage() {
                   <label>
                     Google Maps link
                     <input value={match.mapUrl || ''} onChange={(event) => updateArrayItem('latestMatches', index, 'mapUrl', event.target.value)} />
+                  </label>
+                  <label>
+                    YouTube URL
+                    <input value={match.youtubeUrl || ''} onChange={(event) => updateArrayItem('latestMatches', index, 'youtubeUrl', event.target.value)} />
                   </label>
                   <label>
                     Logo γηπεδούχου (URL)

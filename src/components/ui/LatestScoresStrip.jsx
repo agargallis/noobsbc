@@ -45,6 +45,45 @@ function LocationIcon() {
   );
 }
 
+function YoutubeIcon() {
+  return (
+    <svg
+      className="score-youtube-icon"
+      xmlns="http://www.w3.org/2000/svg"
+      width="18"
+      height="18"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      aria-hidden="true"
+    >
+      <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.6 3.5 12 3.5 12 3.5s-7.6 0-9.4.6A3 3 0 0 0 .5 6.2 31.2 31.2 0 0 0 0 12a31.2 31.2 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.8.6 9.4.6 9.4.6s7.6 0 9.4-.6a3 3 0 0 0 2.1-2.1A31.2 31.2 0 0 0 24 12a31.2 31.2 0 0 0-.5-5.8ZM9.6 15.6V8.4l6.2 3.6-6.2 3.6Z" />
+    </svg>
+  );
+}
+
+function getYoutubeThumbnail(url) {
+  if (!url) {
+    return '';
+  }
+
+  try {
+    const parsed = new URL(url);
+    let videoId = '';
+
+    if (parsed.hostname.includes('youtu.be')) {
+      videoId = parsed.pathname.replace(/\//g, '');
+    } else if (parsed.pathname.startsWith('/live/')) {
+      videoId = parsed.pathname.split('/')[2] || '';
+    } else {
+      videoId = parsed.searchParams.get('v') || '';
+    }
+
+    return videoId ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` : '';
+  } catch {
+    return '';
+  }
+}
+
 export default function LatestScoresStrip({ matches }) {
   const visibleMatches = matches.filter((match) => !match.hidden);
 
@@ -62,53 +101,71 @@ export default function LatestScoresStrip({ matches }) {
         const homeStateClass = isDraw ? 'is-draw' : homeWon ? 'is-winner' : 'is-loser';
         const awayStateClass = isDraw ? 'is-draw' : awayWon ? 'is-winner' : 'is-loser';
         const locationUrl = resolveLocationUrl(match.mapUrl, match.venue);
+        const youtubeThumbnail = getYoutubeThumbnail(match.youtubeUrl);
 
         return (
-          <article key={match.id} className={`score-card ${isWin ? 'is-win' : 'is-loss'}`}>
-            <div className="score-card-top">
-              <span className="score-date-line"><CalendarIcon />{formatMatchDate(match.date)}</span>
-              <strong className={isWin ? 'win' : 'loss'}>{isWin ? 'Ν' : 'Η'}</strong>
-            </div>
+          <div key={match.id} className="score-item-stack">
+            <article className={`score-card ${isWin ? 'is-win' : 'is-loss'}`}>
+              <div className="score-card-top">
+                <span className="score-date-line"><CalendarIcon />{formatMatchDate(match.date)}</span>
+                <strong className={isWin ? 'win' : 'loss'}>{isWin ? 'Ν' : 'Η'}</strong>
+              </div>
 
-            <div className="score-result" aria-label={`Τελικό σκορ ${match.home} ${match.homeScore} - ${match.awayScore} ${match.away}`}>
-              <span className={`score-result-value ${homeStateClass}`}>{match.homeScore}</span>
-              <span className="score-result-sep">-</span>
-              <span className={`score-result-value ${awayStateClass}`}>{match.awayScore}</span>
-            </div>
+              <div className="score-result" aria-label={`Τελικό σκορ ${match.home} ${match.homeScore} - ${match.awayScore} ${match.away}`}>
+                <span className={`score-result-value ${homeStateClass}`}>{match.homeScore}</span>
+                <span className="score-result-sep">-</span>
+                <span className={`score-result-value ${awayStateClass}`}>{match.awayScore}</span>
+              </div>
 
-            <div className="score-matchup">
-              <span className={`score-team ${homeStateClass}`}>
-                <img
-                  src={match.homeLogo || '/images/basketaki.png'}
-                  alt=""
-                  className="match-team-logo"
-                  aria-hidden="true"
-                />
-                <span className="score-team-name">{match.home}</span>
-              </span>
-              <span className={`score-team ${awayStateClass}`}>
-                <img
-                  src={match.awayLogo || '/images/basketaki.png'}
-                  alt=""
-                  className="match-team-logo"
-                  aria-hidden="true"
-                />
-                <span className="score-team-name">{match.away}</span>
-              </span>
-            </div>
+              <div className="score-matchup">
+                <span className={`score-team ${homeStateClass}`}>
+                  <img
+                    src={match.homeLogo || '/images/basketaki.png'}
+                    alt=""
+                    className="match-team-logo"
+                    aria-hidden="true"
+                  />
+                  <span className="score-team-name">{match.home}</span>
+                </span>
+                <span className={`score-team ${awayStateClass}`}>
+                  <img
+                    src={match.awayLogo || '/images/basketaki.png'}
+                    alt=""
+                    className="match-team-logo"
+                    aria-hidden="true"
+                  />
+                  <span className="score-team-name">{match.away}</span>
+                </span>
+              </div>
 
-            {locationUrl ? (
-              <a className="score-location-line location-link" href={locationUrl} target="_blank" rel="noreferrer">
-                <LocationIcon />
-                <span>{match.venue}</span>
+              {locationUrl ? (
+                <a className="score-location-line location-link" href={locationUrl} target="_blank" rel="noreferrer">
+                  <LocationIcon />
+                  <span>{match.venue}</span>
+                </a>
+              ) : (
+                <p className="score-location-line">
+                  <LocationIcon />
+                  <span>{match.venue}</span>
+                </p>
+              )}
+            </article>
+
+            {match.youtubeUrl ? (
+              <a className="score-youtube-preview" href={match.youtubeUrl} target="_blank" rel="noreferrer">
+                <div className="score-youtube-thumb-wrap">
+                  {youtubeThumbnail ? (
+                    <img className="score-youtube-thumb" src={youtubeThumbnail} alt={`YouTube thumbnail για ${match.home} - ${match.away}`} />
+                  ) : (
+                    <div className="score-youtube-thumb score-youtube-thumb-fallback" aria-hidden="true" />
+                  )}
+                  <span className="score-youtube-play">
+                    <YoutubeIcon />
+                  </span>
+                </div>
               </a>
-            ) : (
-              <p className="score-location-line">
-                <LocationIcon />
-                <span>{match.venue}</span>
-              </p>
-            )}
-          </article>
+            ) : null}
+          </div>
         );
       })}
     </div>
