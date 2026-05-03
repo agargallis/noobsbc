@@ -5659,8 +5659,18 @@ tr.is-highlighted:hover {
 
 .app-loading-main {
   min-height: 100vh;
+  min-height: 100dvh;
   display: grid;
   place-items: center;
+  place-content: center;
+  width: 100%;
+  padding: 32px;
+  box-sizing: border-box;
+}
+
+.app-shell-loading .app-loading-main {
+  min-height: 100vh;
+  min-height: 100dvh;
   padding: 32px;
 }
 
@@ -5669,13 +5679,19 @@ tr.is-highlighted:hover {
   display: grid;
   gap: 28px;
   justify-items: center;
+  align-items: center;
+  align-content: center;
+  margin: 0 auto;
   text-align: center;
 }
 
 .app-intro-brand {
   display: grid;
   gap: 16px;
+  width: 100%;
   justify-items: center;
+  align-items: center;
+  text-align: center;
 }
 
 .app-intro-logo-wrap {
@@ -5728,6 +5744,7 @@ tr.is-highlighted:hover {
 .app-intro-loader {
   position: relative;
   width: min(320px, 72vw);
+  max-width: 100%;
   height: 14px;
   border-radius: 999px;
   padding: 2px;
@@ -5775,6 +5792,41 @@ tr.is-highlighted:hover {
 
 .app-shell[data-theme='light'] .app-intro-loader-track {
   background: linear-gradient(90deg, rgba(93, 137, 216, 0.18), rgba(47, 94, 168, 0.88), rgba(22, 63, 130, 0.72));
+}
+
+@media (max-width: 680px) {
+  .app-loading-main,
+  .app-shell-loading .app-loading-main {
+    padding: 24px 18px;
+  }
+
+  .app-intro {
+    width: min(100%, 420px);
+    gap: 24px;
+  }
+
+  .app-intro-brand {
+    gap: 14px;
+  }
+
+  .app-intro-logo-wrap {
+    width: 116px;
+    height: 116px;
+  }
+
+  .app-intro-logo {
+    width: 70px;
+    height: 70px;
+  }
+
+  .app-intro-subtitle {
+    max-width: 100%;
+    letter-spacing: 0.12em;
+  }
+
+  .app-intro-loader {
+    width: min(100%, 280px);
+  }
 }
 
 @media (max-width: 680px) {
