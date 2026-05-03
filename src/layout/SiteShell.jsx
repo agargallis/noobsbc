@@ -1,6 +1,7 @@
 ﻿import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import CookieBanner from '../components/ui/CookieBanner';
+import ShapeGrid from '../components/ui/ShapeGrid';
 import ScrollToTopButton from '../components/ui/ScrollToTopButton';
 import { useSiteData } from '../context/SiteDataContext';
 
@@ -72,10 +73,48 @@ function RouteScrollRestoration() {
   return null;
 }
 
+function AppIntroSplash({ theme }) {
+  return (
+    <div className="app-intro" aria-hidden="true">
+      <div className="app-intro-brand">
+        <div className="app-intro-logo-wrap">
+          <img src="/images/logo1.png" alt="" className="app-intro-logo" />
+        </div>
+        <strong className="app-intro-title">NOOBS BC</strong>
+        <span className="app-intro-subtitle">ΚΑΛΩΣΗΡΘΕΣ ΣΤΟΥΣ NOOBS!</span>
+      </div>
+      <div className="app-intro-loader">
+        <span className="app-intro-loader-track" />
+        <span className="app-intro-loader-glow" />
+      </div>
+    </div>
+  );
+}
+
+function AppBackground({ theme }) {
+  const isLight = theme === 'light';
+
+  return (
+    <div className="app-background" aria-hidden="true">
+      <ShapeGrid
+        className="app-background-grid"
+        direction="diagonal"
+        speed={0.5}
+        squareSize={40}
+        borderColor={isLight ? 'rgba(47, 94, 168, 0.16)' : 'rgba(255, 255, 255, 0.14)'}
+        hoverFillColor={isLight ? 'rgba(47, 94, 168, 0.22)' : 'rgba(117, 168, 255, 0.2)'}
+        shape="square"
+        hoverTrailAmount={5}
+      />
+    </div>
+  );
+}
+
 export default function SiteShell() {
   const { siteData, siteDataLoading } = useSiteData();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [introVisible, setIntroVisible] = useState(true);
   const [theme, setTheme] = useState(() => {
     if (typeof window === 'undefined') {
       return 'dark';
@@ -106,11 +145,26 @@ export default function SiteShell() {
     window.localStorage.setItem(PUBLIC_THEME_STORAGE_KEY, theme);
   }, [theme]);
 
-  if (siteDataLoading || !siteData) {
+  useEffect(() => {
+    if (siteDataLoading || !siteData) {
+      return undefined;
+    }
+
+    const timer = window.setTimeout(() => {
+      setIntroVisible(false);
+    }, 1400);
+
+    return () => window.clearTimeout(timer);
+  }, [siteData, siteDataLoading]);
+
+  if (siteDataLoading || !siteData || introVisible) {
     return (
-      <div className="app-shell app-shell-loading" aria-busy="true">
+      <div className="app-shell app-shell-loading" data-theme={theme} aria-busy="true">
         <RouteScrollRestoration />
-        <main className="app-loading-main" />
+        <AppBackground theme={theme} />
+        <main className="app-loading-main">
+          <AppIntroSplash theme={theme} />
+        </main>
       </div>
     );
   }
@@ -118,6 +172,7 @@ export default function SiteShell() {
   return (
     <div className="app-shell" data-theme={theme}>
       <RouteScrollRestoration />
+      <AppBackground theme={theme} />
 
       <header className={`site-header${scrolled ? ' is-scrolled' : ''}`}>
         <Link className="brand" to="/">
