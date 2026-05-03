@@ -6708,12 +6708,6 @@ img[src*="basketaki.png"] {
   backdrop-filter: none !important;
 }
 
-/* Remove border-top from the first card to avoid double line at top */
-.app-shell[data-theme='light'] .legal-card:first-of-type,
-.app-shell[data-theme='light'] .legal-sections > div:first-child {
-  border-top: none !important;
-}
-
 /* Keep text contrast high */
 .app-shell[data-theme='light'] .legal-page,
 .app-shell[data-theme='light'] .legal-page *:not(svg):not(img) {
