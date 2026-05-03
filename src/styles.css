@@ -2948,6 +2948,9 @@ tr.is-highlighted:hover {
   }
 
   .scores-strip,
+  .scores-strip.count-1,
+  .scores-strip.count-2,
+  .scores-strip.count-3,
   .sponsors-marquee,
   .footer-grid {
     grid-template-columns: 1fr;
