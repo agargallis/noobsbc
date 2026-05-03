@@ -1,5 +1,5 @@
 ﻿import { Link } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 const STORAGE_KEY = 'noobs-cookie-consent-v1';
 
@@ -18,12 +18,13 @@ function CookieIcon() {
 }
 
 export default function CookieBanner() {
-  const [consent, setConsent] = useState(null);
+  const [consent, setConsent] = useState(() => {
+    if (typeof window === 'undefined') {
+      return null;
+    }
 
-  useEffect(() => {
-    const saved = window.localStorage.getItem(STORAGE_KEY);
-    setConsent(saved);
-  }, []);
+    return window.localStorage.getItem(STORAGE_KEY);
+  });
 
   const handleConsent = (value) => {
     window.localStorage.setItem(STORAGE_KEY, value);
