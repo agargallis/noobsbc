@@ -85,6 +85,7 @@ export default function App() {
         <Route path="home" element={<Navigate to="/" replace />} />
       </Route>
       <Route path="/gargalloadminonoobsikobc" element={<AdminPage />} />
+      <Route path="/gargalloadminonoobsikobc/" element={<AdminPage />} />
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );

@@ -1,9 +1,9 @@
 {
-  "id": "/gargalloadminonoobsikobc",
+  "id": "/gargalloadminonoobsikobc/",
   "name": "Noobs Admin",
   "short_name": "Admin",
-  "start_url": "/gargalloadminonoobsikobc",
-  "scope": "/gargalloadminonoobsikobc",
+  "start_url": "/gargalloadminonoobsikobc/",
+  "scope": "/gargalloadminonoobsikobc/",
   "display": "standalone",
   "background_color": "#0b1118",
   "theme_color": "#0b1118",
