@@ -266,7 +266,7 @@ const ShapeGrid = ({
       }
     };
 
-    const handleMouseMove = event => {
+    const handlePointerMove = event => {
       const rect = canvas.getBoundingClientRect();
       const mouseX = event.clientX - rect.left;
       const mouseY = event.clientY - rect.top;
@@ -360,7 +360,7 @@ const ShapeGrid = ({
       }
     };
 
-    const handleMouseLeave = () => {
+    const handlePointerLeave = () => {
       if (hoveredSquare.current && hoverTrailAmount > 0) {
         trailCells.current.unshift({ ...hoveredSquare.current });
         if (trailCells.current.length > hoverTrailAmount) trailCells.current.length = hoverTrailAmount;
@@ -368,16 +368,18 @@ const ShapeGrid = ({
       hoveredSquare.current = null;
     };
 
-    canvas.addEventListener('mousemove', handleMouseMove);
-    canvas.addEventListener('mouseleave', handleMouseLeave);
+    window.addEventListener('pointermove', handlePointerMove, { passive: true });
+    window.addEventListener('pointerdown', handlePointerMove, { passive: true });
+    window.addEventListener('blur', handlePointerLeave);
 
     requestRef.current = requestAnimationFrame(updateAnimation);
 
     return () => {
       window.removeEventListener('resize', resizeCanvas);
       cancelAnimationFrame(requestRef.current);
-      canvas.removeEventListener('mousemove', handleMouseMove);
-      canvas.removeEventListener('mouseleave', handleMouseLeave);
+      window.removeEventListener('pointermove', handlePointerMove);
+      window.removeEventListener('pointerdown', handlePointerMove);
+      window.removeEventListener('blur', handlePointerLeave);
     };
   }, [direction, speed, borderColor, hoverFillColor, squareSize, shape, hoverTrailAmount]);
 

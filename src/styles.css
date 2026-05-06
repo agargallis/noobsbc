@@ -271,7 +271,7 @@ img {
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  pointer-events: auto;
+  pointer-events: none;
   z-index: 0;
 }
 
