@@ -3024,6 +3024,16 @@ tr.is-highlighted:hover {
     gap: 10px;
   }
 
+  .score-carousel-button {
+    width: 44px;
+    height: 44px;
+  }
+
+  .score-carousel-arrow-icon {
+    width: 18px;
+    height: 18px;
+  }
+
   .admin-sidebar {
     position: relative;
     min-height: auto;
@@ -3300,6 +3310,22 @@ tr.is-highlighted:hover {
   .standings-heading .league-mark img {
     display: block;
     margin: 0 auto;
+  }
+
+  .scores-carousel {
+    grid-template-columns: 34px minmax(0, 1fr) 34px;
+    gap: 6px;
+  }
+
+  .score-carousel-button {
+    width: 34px;
+    height: 34px;
+    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.18);
+  }
+
+  .score-carousel-arrow-icon {
+    width: 16px;
+    height: 16px;
   }
 
   .cookie-banner {
